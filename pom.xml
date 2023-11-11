@@ -10,13 +10,25 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>be.gerard.ww</groupId>
+    <groupId>be.ww</groupId>
     <artifactId>waste-and-waist</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>waste-and-waist</name>
     <description>waste-and-waist</description>
+
+    <modules>
+        <module>user</module>
+        <module>household</module>
+        <module>stock</module>
+        <module>store</module>
+        <module>planner</module>
+        <module>kitchen</module>
+        <module>notification</module>
+        <module>web</module>
+        <module>app</module>
+    </modules>
 
     <distributionManagement>
         <repository>
@@ -41,7 +53,38 @@
     </repositories>
 
     <properties>
-        <maven.deploy.skip>false</maven.deploy.skip>
+        <maven.deploy.skip>true</maven.deploy.skip>
+
+        <spring.modulith.version>1.0.2</spring.modulith.version>
+        <axon.version>4.9.1</axon.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- 3rd Party -->
+            <!-- spring -->
+            <!--
+            <dependency>
+                <groupId>org.springframework.modulith</groupId>
+                <artifactId>spring-modulith-bom</artifactId>
+                <version>${spring.modulith.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            -->
+
+            <!-- axon -->
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-bom</artifactId>
+                <version>${axon.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
 
 </project>
