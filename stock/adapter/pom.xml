@@ -11,8 +11,4 @@
 
     <artifactId>stock-adapter</artifactId>
 
-    <properties>
-        <maven.deploy.skip>false</maven.deploy.skip>
-    </properties>
-
 </project>

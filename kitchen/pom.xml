@@ -13,15 +13,10 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>api</module>
         <module>command</module>
-        <module>domain</module>
-        <module>event</module>
         <module>query</module>
         <module>adapter</module>
     </modules>
-
-    <properties>
-        <maven.deploy.skip>true</maven.deploy.skip>
-    </properties>
 
 </project>

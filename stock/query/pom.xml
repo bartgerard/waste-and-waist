@@ -11,8 +11,4 @@
 
     <artifactId>stock-query</artifactId>
 
-    <properties>
-        <maven.deploy.skip>false</maven.deploy.skip>
-    </properties>
-
 </project>

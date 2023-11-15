@@ -11,8 +11,24 @@
 
     <artifactId>household-command</artifactId>
 
-    <properties>
-        <maven.deploy.skip>false</maven.deploy.skip>
-    </properties>
+    <dependencies>
+
+        <!-- 1st party -->
+
+        <!-- waste-and-waist -->
+        <dependency>
+            <groupId>be.ww</groupId>
+            <artifactId>household-api</artifactId>
+        </dependency>
+
+        <!-- 3rd party -->
+
+        <!-- axon -->
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-spring</artifactId>
+        </dependency>
+
+    </dependencies>
 
 </project>

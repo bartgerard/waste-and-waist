@@ -1,27 +1,19 @@
 package be.ww.app;
 
-import be.ww.household.HouseholdModule;
-import be.ww.kitchen.KitchenModule;
-import be.ww.notification.NotificationModule;
-import be.ww.planner.PlannerModule;
-import be.ww.stock.StockModule;
-import be.ww.store.StoreModule;
-import be.ww.user.UserModule;
+import be.ww.configuration.AxonConfiguration;
+import be.ww.configuration.ElasticSearchConfiguration;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
+@Import({
+        AxonConfiguration.class,
+        ElasticSearchConfiguration.class,
+        TestRestController.class
+})
 public class WasteAndWaistApplication {
     public static void main(String[] args) {
-        new SpringApplicationBuilder()
-                .parent(WasteAndWaistApplication.class)
-                .child(UserModule.class)
-                .sibling(HouseholdModule.class)
-                .sibling(StockModule.class)
-                .sibling(StoreModule.class)
-                .sibling(PlannerModule.class)
-                .sibling(KitchenModule.class)
-                .sibling(NotificationModule.class)
-                .run(args);
+        SpringApplication.run(WasteAndWaistApplication.class, args);
     }
 }

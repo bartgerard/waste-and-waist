@@ -11,8 +11,16 @@
 
     <artifactId>household-adapter</artifactId>
 
-    <properties>
-        <maven.deploy.skip>false</maven.deploy.skip>
-    </properties>
+    <dependencies>
+
+        <!-- 3rd party -->
+
+        <!-- spring -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-elasticsearch</artifactId>
+        </dependency>
+
+    </dependencies>
 
 </project>

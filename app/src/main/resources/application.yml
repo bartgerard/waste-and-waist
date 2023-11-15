@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: waste-and-waist
+
+---
+# Axon
+axon:
+  serializer:
+    general: jackson
+    events: jackson
+    messages: jackson
+  axonserver:
+    enabled: true
+    servers: "localhost:8124"
+    component-name: ww-service
+
+---
+# Postgres
+
+spring:
+  datasource:
+    #jdbc-url: jdbc:sqlserver://localhost;encrypt=false
+    #username: sa
+    #password: Admin123
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbc-url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/ww_database
+    username: root
+    password: Admin123
+  jpa:
+    open-in-view: false
+
+---
+# Elasticsearch
+spring.elasticsearch.uris: localhost:9200

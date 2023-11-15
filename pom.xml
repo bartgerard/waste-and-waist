@@ -4,10 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>be.gerard</groupId>
-        <artifactId>parent</artifactId>
-        <version>0.0.1</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.1.5</version>
     </parent>
 
     <groupId>be.ww</groupId>
@@ -28,42 +27,153 @@
         <module>notification</module>
         <module>web</module>
         <module>app</module>
+        <module>shared</module>
     </modules>
 
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub OWNER Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/bartgerard/waste-and-waist</url>
-        </repository>
-    </distributionManagement>
-
-    <repositories>
-        <repository>
-            <id>central</id>
-            <url>https://repo1.maven.org/maven2</url>
-        </repository>
-        <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/bartgerard/*</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
     <properties>
-        <maven.deploy.skip>true</maven.deploy.skip>
+        <java.version>17</java.version>
 
+        <!-- 3rd party -->
+        <springdoc.version>2.2.0</springdoc.version>
         <spring.modulith.version>1.0.2</spring.modulith.version>
         <axon.version>4.9.1</axon.version>
+        <axon.admin.version>0.2.8</axon.admin.version>
+        <jobrunr.version>5.3.3</jobrunr.version>
+
+        <!-- utilities -->
+        <commons-collections4.version>4.4</commons-collections4.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
+
+        <!-- testing -->
+        <spock.version>2.3-groovy-4.0</spock.version>
+        <cucumber.version>7.14.0</cucumber.version>
+        <archunit-junit5.version>1.2.0</archunit-junit5.version>
+        <testcontainers.version>1.19.1</testcontainers.version>
+
+        <!-- plugins -->
+        <gmavenplus-plugin.version>3.0.2</gmavenplus-plugin.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
 
-            <!-- 3rd Party -->
-            <!-- spring -->
+            <!-- 1st party -->
+
+            <!-- waste-and-waist -->
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>shared-elasticsearch</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>household-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>household-adapter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>household-command</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>household-query</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>stock-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>stock-adapter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>stock-command</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>stock-query</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>store-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>store-adapter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>store-command</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>store-query</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>planner-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>planner-adapter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>planner-command</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>planner-query</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>kitchen-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>kitchen-adapter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>kitchen-command</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>kitchen-query</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- 3rd party -->
+
+            <!-- spring modulith -->
             <!--
             <dependency>
                 <groupId>org.springframework.modulith</groupId>
@@ -74,6 +184,13 @@
             </dependency>
             -->
 
+            <!-- openapi springdoc -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+
             <!-- axon -->
             <dependency>
                 <groupId>org.axonframework</groupId>
@@ -82,9 +199,176 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>com.insidion</groupId>
+                <artifactId>axon-open-admin-starter</artifactId>
+                <version>${axon.admin.version}</version>
+            </dependency>
+
+            <!-- jobrunr -->
+            <dependency>
+                <groupId>org.jobrunr</groupId>
+                <artifactId>jobrunr-spring-boot-starter</artifactId>
+                <version>${jobrunr.version}</version>
+            </dependency>
+
+            <!-- utilities -->
+            <!-- apache commons-collections -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
+            </dependency>
+            <!-- apache commons-beanutils -->
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons-beanutils.version}</version>
+            </dependency>
+
+            <!-- testing -->
+            <!-- spock -->
+            <dependency>
+                <groupId>org.spockframework</groupId>
+                <artifactId>spock-bom</artifactId>
+                <version>${spock.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- cucumber -->
+            <dependency>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-bom</artifactId>
+                <version>${cucumber.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- arch-unit -->
+            <dependency>
+                <groupId>com.tngtech.archunit</groupId>
+                <artifactId>archunit-junit5</artifactId>
+                <version>${archunit-junit5.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- testcontainers -->
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>${testcontainers.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+
+        <!-- utilities -->
+        <!-- apache -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- testing -->
+        <!-- spring -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- spock -->
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+
+        <pluginManagement>
+            <plugins>
+
+                <!-- compiler -->
+                <!--
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <parameters>true</parameters>
+                    </configuration>
+                </plugin>
+                -->
+                <!--
+                <parameters>true</parameters> is needed
+                for example when using JsonMapper.builder().addModule(new ParameterNamesModule(..)).build()
+                -->
+
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+
+            <!-- spring-boot-maven -->
+            <!--
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <image>
+                        <builder>paketobuildpacks/builder-jammy-base:latest</builder>
+                    </image>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            -->
+
+            <!-- gmaven -->
+            <plugin>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <version>${gmavenplus-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>compileTests</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- surefire -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <includes>
+                        <include>**/*Specification.class</include>
+                        <include>**/*.Test.java</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/*IntegrationTest.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
 
 </project>
