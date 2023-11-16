@@ -1,4 +1,4 @@
-package be.ww.household.adapter.repository;
+package be.ww.household.query.repository;
 
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 

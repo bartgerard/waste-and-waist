@@ -1,4 +1,4 @@
-package be.ww.household.command;
+package be.ww.household.command.domain;
 
 import be.ww.household.api.command.AddMemberCommand;
 import be.ww.household.api.command.JoinHouseHoldCommand;
@@ -22,7 +22,7 @@ public class HouseHold {
 
     @AggregateIdentifier
     private String houseHoldId;
-    private String creatorId;
+    private String adminUserId;
 
     private HouseHold() {
         // no-op
@@ -58,7 +58,7 @@ public class HouseHold {
     @EventSourcingHandler
     public void on(final HouseHoldStartedEvent event) {
         this.houseHoldId = event.houseHoldId();
-        this.creatorId = event.userId();
+        this.adminUserId = event.userId();
         this.members.add(event.userId());
     }
 

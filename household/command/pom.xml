@@ -21,7 +21,18 @@
             <artifactId>household-api</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>be.ww</groupId>
+            <artifactId>household-adapter</artifactId>
+        </dependency>
+
         <!-- 3rd party -->
+
+        <!-- spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
 
         <!-- axon -->
         <dependency>

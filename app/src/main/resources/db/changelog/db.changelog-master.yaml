@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: INIT-AXON
+      author: bart
+      changes:
+        - sqlFile:
+            path: db/migration/db.changelog-00001-0-create-axon-framework-related-tables-baseline.xml
+            relativeToChangelogFile: false

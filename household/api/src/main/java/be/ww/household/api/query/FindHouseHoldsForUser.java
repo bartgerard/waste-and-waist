@@ -1,6 +1,6 @@
 package be.ww.household.api.query;
 
-public record ListMyHouseHolds(
+public record FindHouseHoldsForUser(
         String userId
 ) {
 }

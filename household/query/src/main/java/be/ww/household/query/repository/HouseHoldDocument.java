@@ -1,4 +1,4 @@
-package be.ww.household.adapter.repository;
+package be.ww.household.query.repository;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
