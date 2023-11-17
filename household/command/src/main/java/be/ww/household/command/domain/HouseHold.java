@@ -8,7 +8,9 @@ import be.ww.household.api.event.HouseHoldStartedEvent;
 import be.ww.household.api.event.MemberAdded;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
+import org.axonframework.modelling.command.AggregateCreationPolicy;
 import org.axonframework.modelling.command.AggregateIdentifier;
+import org.axonframework.modelling.command.CreationPolicy;
 import org.axonframework.spring.stereotype.Aggregate;
 
 import java.util.HashSet;
@@ -29,6 +31,7 @@ public class HouseHold {
     }
 
     @CommandHandler
+    @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
     public void handle(final StartHouseHoldCommand command) {
         apply(new HouseHoldStartedEvent(
                 command.houseHoldId(),
