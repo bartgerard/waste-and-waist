@@ -13,6 +13,7 @@ springdoc:
   packages-to-scan:
     - be.ww.household.command.web
     - be.ww.user.web
+    - be.ww.app
 
 ---
 # Axon
