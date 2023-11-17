@@ -85,10 +85,10 @@ public class HouseHoldProjection {
             final FindHouseHoldById query
     ) {
         return houseHoldRepository.findByHouseHoldIdIs(query.houseHoldId())
+                .stream()
                 .map(houseHold -> new HouseHoldResponseData.HouseHold(
                         houseHold.getHouseHoldId()
                 ))
-                .stream()
                 .collect(collectingAndThen(
                         toUnmodifiableSet(),
                         HouseHoldResponseData::new
@@ -99,11 +99,11 @@ public class HouseHoldProjection {
     public HouseHoldResponseData handle(
             final FindHouseHoldsForUser query
     ) {
-        return houseHoldRepository.findByHouseHoldIdIs(query.userId()) // TODO
+        return houseHoldRepository.findAllByUserId(query.userId())
+                .stream()
                 .map(houseHold -> new HouseHoldResponseData.HouseHold(
                         houseHold.getHouseHoldId()
                 ))
-                .stream()
                 .collect(collectingAndThen(
                         toUnmodifiableSet(),
                         HouseHoldResponseData::new

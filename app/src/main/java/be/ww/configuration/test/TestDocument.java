@@ -1,6 +1,6 @@
 package be.ww.configuration.test;
 
-import be.ww.shared.elasticsearch.DateConverter;
+import be.ww.shared.elasticsearch.util.DateConverter;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Singular;

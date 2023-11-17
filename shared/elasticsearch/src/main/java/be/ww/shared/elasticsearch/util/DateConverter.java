@@ -1,4 +1,4 @@
-package be.ww.shared.elasticsearch;
+package be.ww.shared.elasticsearch.util;
 
 import org.springframework.data.elasticsearch.core.mapping.PropertyValueConverter;
 import org.springframework.lang.NonNull;
@@ -12,7 +12,9 @@ public class DateConverter implements PropertyValueConverter {
 
     @NonNull
     @Override
-    public Object write(@NonNull final Object value) {
+    public Object write(
+            @NonNull final Object value
+    ) {
         final LocalDate date = (LocalDate) value;
         if (date.isBefore(MIN_DATE)) {
             return MIN_DATE.toString();
@@ -25,7 +27,9 @@ public class DateConverter implements PropertyValueConverter {
 
     @NonNull
     @Override
-    public Object read(@NonNull final Object value) {
+    public Object read(
+            @NonNull final Object value
+    ) {
         final LocalDate date = LocalDate.parse((String) value);
         if (date.isEqual(MIN_DATE)) {
             return LocalDate.MIN;
@@ -35,5 +39,4 @@ public class DateConverter implements PropertyValueConverter {
             return date;
         }
     }
-
 }
