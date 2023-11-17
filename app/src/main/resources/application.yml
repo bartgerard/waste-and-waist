@@ -1,0 +1,60 @@
+spring:
+  application:
+    name: waste-and-waist
+
+---
+# Spring Doc
+springdoc:
+  show-actuator: true
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: method
+  packages-to-scan:
+    - be.ww.household.command.web
+    - be.ww.user.web
+
+---
+# Axon
+axon:
+  serializer:
+    general: jackson
+    events: jackson
+    messages: jackson
+  axonserver:
+    enabled: false
+    servers: "localhost:8124"
+    component-name: ww-service
+
+---
+# Postgres
+
+spring:
+  init-datasource:
+    #jdbc-url: jdbc:sqlserver://localhost;encrypt=false
+    #username: sa
+    #password: Admin123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbc-url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/ww_database
+    username: root
+    password: Admin123
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbc-url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/ww_database
+    username: root
+    password: Admin123
+  jpa:
+    open-in-view: false
+
+---
+# Elasticsearch
+spring.elasticsearch.uris: localhost:9200
+
+---
+# Liquibase
+spring:
+  liquibase:
+    enabled: false
+    user: root
+    password: Amin123
+
