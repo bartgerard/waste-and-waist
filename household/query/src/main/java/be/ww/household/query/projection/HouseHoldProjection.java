@@ -6,6 +6,7 @@ import be.ww.household.api.event.MemberAdded;
 import be.ww.household.api.query.FindHouseHoldById;
 import be.ww.household.api.query.FindHouseHoldsForUser;
 import be.ww.household.api.query.HouseHoldResponseData;
+import be.ww.household.api.type.HouseHoldId;
 import be.ww.household.query.repository.HouseHoldDocument;
 import be.ww.household.query.repository.HouseHoldRepository;
 import be.ww.household.query.repository.MemberField;
@@ -15,9 +16,11 @@ import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.messaging.unitofwork.UnitOfWork;
 import org.axonframework.queryhandling.QueryHandler;
+import org.axonframework.queryhandling.QueryUpdateEmitter;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toUnmodifiableSet;
@@ -29,6 +32,7 @@ import static java.util.stream.Collectors.toUnmodifiableSet;
 public class HouseHoldProjection {
 
     private final HouseHoldRepository houseHoldRepository;
+    private final QueryUpdateEmitter queryUpdateEmitter;
 
     @EventHandler
     public void on(
@@ -44,6 +48,9 @@ public class HouseHoldProjection {
                 )))
                 .build()
         );
+
+        emitUpdateForHouseHoldId(HouseHoldId.of(event.houseHoldId()));
+        emitUpdateForUser(event.userId());
     }
 
     @EventHandler
@@ -61,6 +68,8 @@ public class HouseHoldProjection {
                         .build()
                 )
                 .ifPresent(houseHoldRepository::save);
+
+        emitUpdateForHouseHoldId(HouseHoldId.of(event.houseHoldId()));
     }
 
     @EventHandler
@@ -78,6 +87,9 @@ public class HouseHoldProjection {
                         .build()
                 )
                 .ifPresent(houseHoldRepository::save);
+
+        emitUpdateForHouseHoldId(HouseHoldId.of(event.houseHoldId()));
+        emitUpdateForUser(event.userId());
     }
 
     @QueryHandler
@@ -108,6 +120,26 @@ public class HouseHoldProjection {
                         toUnmodifiableSet(),
                         HouseHoldResponseData::new
                 ));
+    }
+
+    private void emitUpdateForUser(
+            final String userId
+    ) {
+        queryUpdateEmitter.emit(
+                FindHouseHoldsForUser.class,
+                query -> Objects.equals(query.userId(), userId),
+                handle(new FindHouseHoldsForUser(userId))
+        );
+    }
+
+    private void emitUpdateForHouseHoldId(
+            final HouseHoldId houseHoldId
+    ) {
+        queryUpdateEmitter.emit(
+                FindHouseHoldById.class,
+                query -> Objects.equals(query.houseHoldId(), houseHoldId.id()),
+                handle(new FindHouseHoldById(houseHoldId.id()))
+        );
     }
 
 }

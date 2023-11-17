@@ -10,4 +10,10 @@ public record HouseHoldId(
                 "house-hold-%s".formatted(UUID.randomUUID().toString())
         );
     }
+
+    public static HouseHoldId of(
+            final String id
+    ) {
+        return new HouseHoldId(id);
+    }
 }
