@@ -12,6 +12,7 @@ public record MemberField(
         @Field(name = "user_id", type = FieldType.Keyword, norms = false)
         String userId
 ) {
+    
     public static MemberField of(
             String name,
             String userId
