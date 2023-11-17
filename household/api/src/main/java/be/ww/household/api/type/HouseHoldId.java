@@ -7,7 +7,7 @@ public record HouseHoldId(
 ) {
     public static HouseHoldId create() {
         return new HouseHoldId(
-                "house-hold-%s".formatted(UUID.randomUUID().toString())
+                "house-hold-%s".formatted(UUID.randomUUID())
         );
     }
 

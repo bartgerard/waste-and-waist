@@ -11,4 +11,53 @@
 
     <artifactId>stock-command</artifactId>
 
+    <dependencies>
+
+        <!-- 1st party -->
+
+        <!-- waste-and-waist -->
+        <dependency>
+            <groupId>be.ww</groupId>
+            <artifactId>shared-elasticsearch</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>be.ww</groupId>
+            <artifactId>household-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>be.ww</groupId>
+            <artifactId>stock-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>be.ww</groupId>
+            <artifactId>stock-adapter</artifactId>
+        </dependency>
+
+        <!-- 3rd party -->
+
+        <!-- spring -->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-elasticsearch</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+
+        <!-- axon -->
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-spring</artifactId>
+        </dependency>
+
+    </dependencies>
+
 </project>

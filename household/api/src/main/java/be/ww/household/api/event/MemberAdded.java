@@ -1,7 +1,14 @@
 package be.ww.household.api.event;
 
+import be.ww.household.api.type.HouseHoldId;
+import be.ww.household.api.type.MemberId;
+
+import java.time.LocalDate;
+
 public record MemberAdded(
-        String houseHoldId,
-        String memberName
+        HouseHoldId houseHoldId,
+        MemberId memberId,
+        String memberName,
+        LocalDate birthDate
 ) {
 }

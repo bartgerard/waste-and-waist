@@ -20,6 +20,11 @@
             <groupId>be.ww</groupId>
             <artifactId>shared-elasticsearch</artifactId>
         </dependency>
+        <dependency>
+            <groupId>be.ww</groupId>
+            <artifactId>shared-jackson</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>be.ww</groupId>

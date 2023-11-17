@@ -12,6 +12,7 @@ springdoc:
     operations-sorter: method
   packages-to-scan:
     - be.ww.household.command.web
+    - be.ww.stock.command.web
     - be.ww.user.web
     - be.ww.app
 

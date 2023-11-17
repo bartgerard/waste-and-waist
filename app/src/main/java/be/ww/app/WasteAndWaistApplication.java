@@ -7,6 +7,7 @@ import be.ww.household.HouseholdModule;
 import be.ww.kitchen.KitchenModule;
 import be.ww.notification.NotificationModule;
 import be.ww.planner.PlannerModule;
+import be.ww.shared.jackson.ObjectMapperConfiguration;
 import be.ww.stock.StockModule;
 import be.ww.store.StoreModule;
 import be.ww.user.UserModule;
@@ -19,6 +20,7 @@ import org.springframework.context.annotation.Import;
         JpaEventStoreAutoConfiguration.class
 })
 @Import({
+        ObjectMapperConfiguration.class,
         AxonConfiguration.class,
         DateSourceConfiguration.class,
         ElasticSearchConfiguration.class,

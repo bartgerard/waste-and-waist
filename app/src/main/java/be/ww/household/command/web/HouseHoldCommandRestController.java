@@ -1,14 +1,17 @@
 package be.ww.household.command.web;
 
+import be.ww.household.api.command.AddMemberCommand;
 import be.ww.household.api.command.StartHouseHoldCommand;
 import be.ww.household.api.query.FindHouseHoldById;
 import be.ww.household.api.query.HouseHoldResponseData;
 import be.ww.household.api.type.HouseHoldId;
+import be.ww.household.api.type.MemberId;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.extensions.reactor.commandhandling.gateway.ReactorCommandGateway;
 import org.axonframework.extensions.reactor.queryhandling.gateway.ReactorQueryGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,10 +39,11 @@ public class HouseHoldCommandRestController {
     ) {
         final HouseHoldId houseHoldId = HouseHoldId.create();
         return reactorCommandGateway.send(new StartHouseHoldCommand(
-                        houseHoldId.id(),
+                        houseHoldId,
                         houseHoldRequestData.houseHoldName(),
                         houseHoldRequestData.userId(),
-                        houseHoldRequestData.memberName()
+                        houseHoldRequestData.memberName(),
+                        houseHoldRequestData.birthDate()
                 ))
                 .transform(objectMono -> Mono.zip(
                                         objectMono.subscribeOn(Schedulers.parallel()),
@@ -47,6 +51,21 @@ public class HouseHoldCommandRestController {
                                 )
                                 .map(Tuple2::getT2)
                 );
+    }
+
+    @PostMapping("{houseHoldId}/members")
+    public void register(
+            @PathVariable final HouseHoldId houseHoldId,
+            @RequestBody final MemberRequestData memberRequestData
+    ) {
+        final MemberId memberId = MemberId.create();
+        reactorCommandGateway.send(new AddMemberCommand(
+                        houseHoldId,
+                        memberId,
+                        memberRequestData.name(),
+                        memberRequestData.birthDate()
+                ))
+                .block();
     }
 
 

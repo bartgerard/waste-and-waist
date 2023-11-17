@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.data.elasticsearch.DataElasticsearchTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -24,18 +25,18 @@ class HouseHoldRepositoryIntegrationTest extends ElasticsearchContainerBaseTest 
     private static final HouseHoldDocument HOUSE_HOLD_1 = HouseHoldDocument.builder()
             .houseHoldId("house-hold-1")
             .members(Set.of(
-                    MemberField.of("Joe", "user-1"),
-                    MemberField.of("Partner", "user-2"),
-                    MemberField.of("child-1", null),
-                    MemberField.of("child-2", null)
+                    MemberField.of("member-1", "Joe", LocalDate.parse("1988-01-01"), "user-1"),
+                    MemberField.of("member-2", "Partner", LocalDate.parse("1988-01-01"), "user-2"),
+                    MemberField.of("member-1", "child-1", LocalDate.parse("1988-01-01"), null),
+                    MemberField.of("member-1", "child-2", LocalDate.parse("1988-01-01"), null)
             ))
             .build();
 
     private static final HouseHoldDocument HOUSE_HOLD_2 = HouseHoldDocument.builder()
             .houseHoldId("house-hold-1")
             .members(Set.of(
-                    MemberField.of("Marc (actually Joe)", "user-1"),
-                    MemberField.of("Mistress", "user-3")
+                    MemberField.of("member-1", "Marc (actually Joe)", LocalDate.parse("1988-01-01"), "user-1"),
+                    MemberField.of("member-2", "Mistress", LocalDate.parse("1988-01-01"), "user-3")
             ))
             .build();
 

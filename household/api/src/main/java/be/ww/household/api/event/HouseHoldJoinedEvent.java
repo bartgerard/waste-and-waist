@@ -1,7 +1,9 @@
 package be.ww.household.api.event;
 
+import be.ww.household.api.type.HouseHoldId;
+
 public record HouseHoldJoinedEvent(
-        String houseHoldId,
+        HouseHoldId houseHoldId,
         String userId,
         String memberName
 ) {

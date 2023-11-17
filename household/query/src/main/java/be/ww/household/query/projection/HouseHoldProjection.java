@@ -19,7 +19,6 @@ import org.axonframework.queryhandling.QueryHandler;
 import org.axonframework.queryhandling.QueryUpdateEmitter;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Objects;
 
 import static java.util.stream.Collectors.collectingAndThen;
@@ -41,16 +40,11 @@ public class HouseHoldProjection {
     ) {
         log.info("Handle HouseHoldStartedEvent [{}]", event);
         houseHoldRepository.save(HouseHoldDocument.builder()
-                .houseHoldId(event.houseHoldId())
-                .members(List.of(MemberField.of(
-                        event.memberName(),
-                        event.userId()
-                )))
+                .houseHoldId(event.houseHoldId().id())
                 .build()
         );
 
-        emitUpdateForHouseHoldId(HouseHoldId.of(event.houseHoldId()));
-        emitUpdateForUser(event.userId());
+        emitUpdateForHouseHoldId(event.houseHoldId());
     }
 
     @EventHandler
@@ -59,17 +53,19 @@ public class HouseHoldProjection {
             final UnitOfWork<?> unitOfWork
     ) {
         log.info("Handle MemberAdded [{}]", event);
-        houseHoldRepository.findByHouseHoldIdIs(event.houseHoldId())
+        houseHoldRepository.findByHouseHoldIdIs(event.houseHoldId().id())
                 .map(houseHoldDocument -> houseHoldDocument.toBuilder()
                         .member(MemberField.of(
+                                event.memberId().id(),
                                 event.memberName(),
+                                event.birthDate(),
                                 null
                         ))
                         .build()
                 )
                 .ifPresent(houseHoldRepository::save);
 
-        emitUpdateForHouseHoldId(HouseHoldId.of(event.houseHoldId()));
+        emitUpdateForHouseHoldId(event.houseHoldId());
     }
 
     @EventHandler
@@ -78,7 +74,8 @@ public class HouseHoldProjection {
             final UnitOfWork<?> unitOfWork
     ) {
         log.info("Handle HouseHoldJoinedEvent [{}]", event);
-        houseHoldRepository.findByHouseHoldIdIs(event.houseHoldId())
+        /*
+        houseHoldRepository.findByHouseHoldIdIs(event.houseHoldId().id())
                 .map(houseHoldDocument -> houseHoldDocument.toBuilder()
                         .member(MemberField.of(
                                 event.memberName(),
@@ -88,7 +85,9 @@ public class HouseHoldProjection {
                 )
                 .ifPresent(houseHoldRepository::save);
 
-        emitUpdateForHouseHoldId(HouseHoldId.of(event.houseHoldId()));
+         */
+
+        emitUpdateForHouseHoldId(event.houseHoldId());
         emitUpdateForUser(event.userId());
     }
 
