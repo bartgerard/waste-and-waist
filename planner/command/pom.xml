@@ -11,4 +11,23 @@
 
     <artifactId>planner-command</artifactId>
 
+    <dependencies>        <!-- axon -->
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>be.ww</groupId>
+            <artifactId>shared-types</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>be.ww</groupId>
+            <artifactId>planner-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>be.ww</groupId>
+            <artifactId>planner-api</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
