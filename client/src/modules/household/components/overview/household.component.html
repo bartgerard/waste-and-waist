@@ -4,19 +4,20 @@
     <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row form-element">
             <tr>
-                <h3>Locations</h3>
+                <h3>
+                    <a>Locations </a>
+                    <i class="pi pi-home"></i>
+                </h3>
             </tr>
             <p-table [value]="locations" selectionMode="single" [(selection)]="selectedLocation" dataKey="locationId"
                 [tableStyle]="{'min-width': '50rem'}">
                 <ng-template pTemplate="header">
                     <tr>
-                        <th>Location ID</th>
                         <th>Name</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-location>
                     <tr [pSelectableRow]="location">
-                        <td>{{location.locationId}}</td>
                         <td>{{location.name}}</td>
                     </tr>
                 </ng-template>
@@ -28,7 +29,10 @@
         </div>
         <div class="ui-grid-row form-element">
             <tr>
-                <h3>Appliances</h3>
+                <h3>
+                    <a>Appliances </a>
+                    <i class="pi pi-instagram"></i>
+                </h3>
             </tr>
             <tr>
                 <p-selectButton [options]="appliances" (ngModel)="selectedAppliance" optionLabel="type"
