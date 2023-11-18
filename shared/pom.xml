@@ -16,6 +16,7 @@
         <module>elasticsearch-test</module>
         <module>jackson</module>
         <module>domain-api</module>
+        <module>types</module>
     </modules>
 
 </project>

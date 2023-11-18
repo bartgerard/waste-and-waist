@@ -1,4 +1,5 @@
-package be.ww.household.api.type;
+package be.ww.shared.type;
+
 
 import be.ww.shared.domain.api.EntityId;
 

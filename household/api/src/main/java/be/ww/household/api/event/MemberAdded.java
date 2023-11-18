@@ -1,7 +1,7 @@
 package be.ww.household.api.event;
 
-import be.ww.household.api.type.HouseHoldId;
-import be.ww.household.api.type.MemberId;
+import be.ww.shared.type.HouseHoldId;
+import be.ww.shared.type.MemberId;
 
 import java.time.LocalDate;
 

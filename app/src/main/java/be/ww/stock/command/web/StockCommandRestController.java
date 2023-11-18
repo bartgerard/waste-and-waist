@@ -1,8 +1,8 @@
 package be.ww.stock.command.web;
 
+import be.ww.shared.type.HouseHoldId;
+import be.ww.shared.type.LocationId;
 import be.ww.stock.api.command.AddLocation;
-import be.ww.stock.api.type.HouseHoldId;
-import be.ww.stock.api.type.LocationId;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.extensions.reactor.commandhandling.gateway.ReactorCommandGateway;
 import org.axonframework.extensions.reactor.queryhandling.gateway.ReactorQueryGateway;

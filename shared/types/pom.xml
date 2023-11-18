@@ -5,34 +5,20 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>be.ww</groupId>
-        <artifactId>kitchen</artifactId>
+        <artifactId>shared</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>kitchen-api</artifactId>
+    <artifactId>shared-types</artifactId>
 
     <dependencies>
-
         <!-- 1st party -->
-
+        
         <!-- ww -->
         <dependency>
             <groupId>be.ww</groupId>
             <artifactId>shared-domain-api</artifactId>
         </dependency>
-        <dependency>
-            <groupId>be.ww</groupId>
-            <artifactId>shared-types</artifactId>
-        </dependency>
-
-        <!-- 3rd party  -->
-
-        <!-- axon -->
-        <dependency>
-            <groupId>org.axonframework</groupId>
-            <artifactId>axon-modelling</artifactId>
-        </dependency>
-
     </dependencies>
 
 </project>

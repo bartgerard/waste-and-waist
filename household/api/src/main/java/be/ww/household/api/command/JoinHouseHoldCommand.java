@@ -1,6 +1,6 @@
 package be.ww.household.api.command;
 
-import be.ww.household.api.type.HouseHoldId;
+import be.ww.shared.type.HouseHoldId;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 public record JoinHouseHoldCommand(

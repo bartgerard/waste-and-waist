@@ -2,7 +2,7 @@ package be.ww.stock.command.domain;
 
 import be.ww.stock.api.command.AddLocation;
 import be.ww.stock.api.event.LocationAdded;
-import be.ww.stock.api.type.LocationId;
+import be.ww.shared.type.LocationId;
 import be.ww.stock.command.repository.StockHouseHoldRepository;
 import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;

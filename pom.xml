@@ -74,6 +74,11 @@
                 <artifactId>shared-domain-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>shared-types</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>be.ww</groupId>
