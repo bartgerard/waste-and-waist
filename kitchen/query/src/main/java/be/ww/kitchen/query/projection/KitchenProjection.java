@@ -35,6 +35,8 @@ public class KitchenProjection {
 						.builder()
 						.recipeId(RecipeId.of(recipe.getRecipeId()))
 						.name(recipe.getName())
+						.instructions(recipe.getInstructions())
+						.portionSize(recipe.getPortionSize())
 						.build()
 				).orElseThrow((() -> new IllegalArgumentException("Can't find Recipe")));
 	}
@@ -47,6 +49,8 @@ public class KitchenProjection {
 		kitchenRepository.save(KitchenDocument.builder()
 				.recipeId(event.recipeId().id())
 				.name(event.name())
+				.instructions(event.instructions())
+				.portionSize(event.portionSize())
 				.build()
 		);
 		emitUpdateForRecipeId(event.recipeId());

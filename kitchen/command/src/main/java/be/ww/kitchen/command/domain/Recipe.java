@@ -6,6 +6,7 @@ import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.modelling.command.AggregateCreationPolicy;
+import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.CreationPolicy;
 import org.axonframework.spring.stereotype.Aggregate;
 
@@ -19,6 +20,7 @@ import lombok.NoArgsConstructor;
 @Aggregate
 @NoArgsConstructor
 public class Recipe {
+	@AggregateIdentifier
 	private RecipeId recipeId;
 
 	@CommandHandler
@@ -28,7 +30,9 @@ public class Recipe {
 	) {
 		apply(new RecipeCreatedEvent(
 				command.recipeId(),
-				command.name()
+				command.name(),
+				command.instructions(),
+				command.portionSize()
 		));
 	}
 
