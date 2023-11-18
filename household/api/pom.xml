@@ -13,6 +13,14 @@
 
     <dependencies>
 
+        <!-- 1st party -->
+
+        <!-- ww -->
+        <dependency>
+            <groupId>be.ww</groupId>
+            <artifactId>shared-domain-api</artifactId>
+        </dependency>
+
         <!-- 3rd party  -->
 
         <!-- axon -->

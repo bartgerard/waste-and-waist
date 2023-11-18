@@ -124,4 +124,9 @@ public class AxonConfiguration {
         return storageEngine;
     }
 
+    @Bean
+    public DomainApiJacksonModule domainApiJacksonModule() {
+        return new DomainApiJacksonModule();
+    }
+
 }
