@@ -1,4 +1,4 @@
-package be.ww.household.query.configuration;
+package be.ww.stock.query.configuration;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -6,10 +6,10 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 
 @Configuration
 @ComponentScan(
-        basePackages = "be.ww.household.query.projection"
+		basePackages = "be.ww.stock.query.projection"
 )
 @EnableElasticsearchRepositories(
-        basePackages = "be.ww.household.query.repository"
+		basePackages = "be.ww.stock.query.repository"
 )
-public class HouseHoldQueryConfiguration {
+public class StockQueryConfiguration {
 }
