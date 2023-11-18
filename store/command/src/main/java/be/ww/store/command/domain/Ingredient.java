@@ -31,7 +31,8 @@ public class Ingredient {
                 command.brand(),
                 command.stores(),
                 command.unitQuantity(),
-                command.nutritionalFacts()
+                command.nutritionalFacts(),
+                command.allergens()
         ));
     }
 

@@ -24,5 +24,8 @@ Content-Type: application/json
     "FAT": 8,
     "FIBRE": 0.5,
     "SALT": 0.34
-  }
+  },
+  "allergens": [
+    "EGGS"
+  ]
 }

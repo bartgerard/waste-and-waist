@@ -2,6 +2,7 @@ package be.ww.store.api.query;
 
 import be.ww.shared.type.Amount;
 import be.ww.shared.type.ProductId;
+import be.ww.shared.type.ingredient.Allergen;
 import be.ww.shared.type.ingredient.NutritionalFact;
 import be.ww.shared.type.ingredient.Quantity;
 import lombok.Builder;
@@ -16,6 +17,7 @@ public record Product(
         String brand,
         Set<String> stores,
         Quantity unitQuantity,
-        Map<NutritionalFact, Amount> nutritionalFacts
+        Map<NutritionalFact, Amount> nutritionalFacts,
+        Set<Allergen> allergens
 ) {
 }

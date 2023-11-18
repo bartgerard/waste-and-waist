@@ -31,7 +31,8 @@ public class ProductRestController {
                 productRequestData.brand(),
                 productRequestData.stores(),
                 productRequestData.unitQuantity(),
-                productRequestData.nutritionalFacts()
+                productRequestData.nutritionalFacts(),
+                productRequestData.allergens()
         ));
     }
 
