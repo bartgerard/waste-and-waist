@@ -26,10 +26,12 @@ public class ProductRestController {
     ) {
         return reactorCommandGateway.send(new AddProductCommand(
                 IngredientId.of(productRequestData.ingredientId()),
-                ProductId.of(productRequestData.productId()),
+                ProductId.create(),
                 productRequestData.productName(),
                 productRequestData.brand(),
-                productRequestData.stores()
+                productRequestData.stores(),
+                productRequestData.unitQuantity(),
+                productRequestData.nutritionalFacts()
         ));
     }
 

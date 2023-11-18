@@ -21,7 +21,8 @@ public record Quantity(
     public enum Unit {
         LITER("L"),
         GRAM("g"),
-        KILOGRAM("kg");
+        KILOGRAM("kg"),
+        PIECES("");
 
         private final String symbol;
 

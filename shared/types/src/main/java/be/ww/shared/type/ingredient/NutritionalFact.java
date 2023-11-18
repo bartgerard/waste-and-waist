@@ -1,28 +1,22 @@
 package be.ww.shared.type.ingredient;
 
-import be.ww.shared.type.Amount;
+public enum NutritionalFact {
+    ENERGY("kcal"),
+    PROTEIN("g"),
+    CARBOHYDRATE("g"),
+    SUGAR("g"),
+    FAT("g"),
+    SATURATED_FAT("g"),
+    FIBRE("g"),
+    SALT("g");
 
-public record NutritionalFact(
-        Fact fact,
-        Amount amount
-) {
-    public enum Fact {
-        ENERGY("kcal"),
-        PROTEIN("g"),
-        CARBOHYDRATE("g"),
-        SUGAR("g"),
-        FAT("g"),
-        FIBRE("g"),
-        SALT("g");
+    private final String unit;
 
-        private final String unit;
+    NutritionalFact(final String unit) {
+        this.unit = unit;
+    }
 
-        Fact(final String unit) {
-            this.unit = unit;
-        }
-
-        public String unit() {
-            return unit;
-        }
+    public String unit() {
+        return unit;
     }
 }
