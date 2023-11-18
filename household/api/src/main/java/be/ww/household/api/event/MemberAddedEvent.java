@@ -5,7 +5,7 @@ import be.ww.shared.type.MemberId;
 
 import java.time.LocalDate;
 
-public record MemberAdded(
+public record MemberAddedEvent(
         HouseHoldId houseHoldId,
         MemberId memberId,
         String memberName,

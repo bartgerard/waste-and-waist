@@ -1,7 +1,8 @@
 package be.ww.household.query.web;
 
-import be.ww.household.api.query.FindHouseHoldsForUser;
+import be.ww.household.api.query.FindHouseHoldsForUserQuery;
 import be.ww.household.api.query.HouseHoldResponseData;
+import be.ww.shared.type.UserId;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.extensions.reactor.queryhandling.gateway.ReactorQueryGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
@@ -20,10 +21,10 @@ public class HouseHoldQueryController {
     // Request-Response
     @MessageMapping("users.{userId}.house-holds")
     public Mono<HouseHoldResponseData> myHouseHolds(
-            @DestinationVariable String userId
+            @DestinationVariable final String userId
     ) {
         return reactorQueryGateway.query(
-                new FindHouseHoldsForUser(userId),
+                new FindHouseHoldsForUserQuery(UserId.of(userId)),
                 ResponseTypes.instanceOf(HouseHoldResponseData.class)
         );
     }
@@ -31,10 +32,10 @@ public class HouseHoldQueryController {
     // Request-Stream
     @MessageMapping("users.{userId}.house-holds")
     public Flux<HouseHoldResponseData> myHouseHolds_subscribe(
-            @DestinationVariable String userId
+            @DestinationVariable final String userId
     ) {
         return reactorQueryGateway.subscriptionQueryMany(
-                new FindHouseHoldsForUser(userId),
+                new FindHouseHoldsForUserQuery(UserId.of(userId)),
                 HouseHoldResponseData.class
         );
     }

@@ -1,13 +1,16 @@
 package be.ww.household.command.domain;
 
 import be.ww.household.api.command.AddMemberCommand;
+import be.ww.household.api.command.DisbandHouseHoldCommand;
 import be.ww.household.api.command.JoinHouseHoldCommand;
 import be.ww.household.api.command.StartHouseHoldCommand;
+import be.ww.household.api.event.HouseHoldDisbandedEvent;
 import be.ww.household.api.event.HouseHoldJoinedEvent;
 import be.ww.household.api.event.HouseHoldStartedEvent;
-import be.ww.household.api.event.MemberAdded;
+import be.ww.household.api.event.MemberAddedEvent;
 import be.ww.shared.type.HouseHoldId;
 import be.ww.shared.type.MemberId;
+import be.ww.shared.type.UserId;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateCreationPolicy;
@@ -21,6 +24,7 @@ import java.util.Set;
 
 import static org.apache.commons.lang3.Validate.isTrue;
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
+import static org.axonframework.modelling.command.AggregateLifecycle.markDeleted;
 
 @Aggregate
 public class HouseHold {
@@ -36,15 +40,22 @@ public class HouseHold {
     @CommandHandler
     @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
     public void handle(final StartHouseHoldCommand command) {
+        final MemberId memberId = MemberId.create();
+        final UserId userId = UserId.of(command.userId());
         apply(new HouseHoldStartedEvent(
                 command.houseHoldId(),
                 command.houseHoldName()
         ));
-        apply(new MemberAdded(
+        apply(new MemberAddedEvent(
                 command.houseHoldId(),
-                MemberId.create(),
+                memberId,
                 command.memberName(),
                 command.birthDate()
+        ));
+        apply(new HouseHoldJoinedEvent(
+                command.houseHoldId(),
+                memberId,
+                userId
         ));
     }
 
@@ -52,7 +63,7 @@ public class HouseHold {
     public void handle(final AddMemberCommand command) {
         isTrue(LocalDate.now().isAfter(command.birthDate()), "birthDate in the future");
 
-        apply(new MemberAdded(
+        apply(new MemberAddedEvent(
                 command.houseHoldId(),
                 command.memberId(),
                 command.memberName(),
@@ -64,8 +75,15 @@ public class HouseHold {
     public void handle(final JoinHouseHoldCommand command) {
         apply(new HouseHoldJoinedEvent(
                 command.houseHoldId(),
-                command.userId(),
-                "todo"
+                command.memberId(),
+                command.userId()
+        ));
+    }
+
+    @CommandHandler
+    public void handle(final DisbandHouseHoldCommand command) {
+        apply(new HouseHoldDisbandedEvent(
+                command.houseHoldId()
         ));
     }
 
@@ -75,13 +93,18 @@ public class HouseHold {
     }
 
     @EventSourcingHandler
-    public void on(final MemberAdded event) {
+    public void on(final MemberAddedEvent event) {
         this.members.add(event.memberId());
     }
 
     @EventSourcingHandler
     public void on(final HouseHoldJoinedEvent event) {
         //this.members.add(event.userId());
+    }
+
+    @EventSourcingHandler
+    public void on(final HouseHoldDisbandedEvent event) {
+        markDeleted();
     }
 
 }

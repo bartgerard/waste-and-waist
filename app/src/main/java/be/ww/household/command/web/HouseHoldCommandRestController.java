@@ -2,7 +2,7 @@ package be.ww.household.command.web;
 
 import be.ww.household.api.command.AddMemberCommand;
 import be.ww.household.api.command.StartHouseHoldCommand;
-import be.ww.household.api.query.FindHouseHoldById;
+import be.ww.household.api.query.FindHouseHoldByIdQuery;
 import be.ww.household.api.query.HouseHoldResponseData;
 import be.ww.shared.type.HouseHoldId;
 import be.ww.shared.type.MemberId;
@@ -73,7 +73,7 @@ public class HouseHoldCommandRestController {
             final HouseHoldId houseHoldId
     ) {
         final Flux<HouseHoldResponseData> queryResult = reactorQueryGateway.queryUpdates(
-                new FindHouseHoldById(houseHoldId.id()),
+                new FindHouseHoldByIdQuery(houseHoldId),
                 ResponseTypes.instanceOf(HouseHoldResponseData.class)
         );
 

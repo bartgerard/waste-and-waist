@@ -1,7 +1,7 @@
 package be.ww.stock.command.domain;
 
-import be.ww.stock.api.command.AddLocation;
-import be.ww.stock.api.event.LocationAdded;
+import be.ww.stock.api.command.AddLocationCommand;
+import be.ww.stock.api.event.LocationAddedEvent;
 import be.ww.shared.type.LocationId;
 import be.ww.stock.command.repository.StockHouseHoldRepository;
 import lombok.NoArgsConstructor;
@@ -23,13 +23,13 @@ public class Location {
     @CommandHandler
     @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
     public void handle(
-            final AddLocation command,
+            final AddLocationCommand command,
             final StockHouseHoldRepository stockHouseHoldRepository
     ) {
         stockHouseHoldRepository.findByHouseHoldIdIs(command.houseHoldId().id())
                 .orElseThrow(() -> new IllegalArgumentException("houseHoldId does not exist"));
 
-        apply(new LocationAdded(
+        apply(new LocationAddedEvent(
                 command.locationId(),
                 command.houseHoldId(),
                 command.name()
@@ -38,7 +38,7 @@ public class Location {
 
     @EventHandler
     public void on(
-            final LocationAdded event
+            final LocationAddedEvent event
     ) {
         this.locationId = event.locationId();
     }

@@ -2,7 +2,7 @@ package be.ww.stock.command.web;
 
 import be.ww.shared.type.HouseHoldId;
 import be.ww.shared.type.LocationId;
-import be.ww.stock.api.command.AddLocation;
+import be.ww.stock.api.command.AddLocationCommand;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.extensions.reactor.commandhandling.gateway.ReactorCommandGateway;
 import org.axonframework.extensions.reactor.queryhandling.gateway.ReactorQueryGateway;
@@ -27,7 +27,7 @@ public class StockCommandRestController {
             @RequestBody final LocationRequestData locationRequestData
     ) {
         final LocationId locationId = LocationId.create();
-        reactorCommandGateway.send(new AddLocation(
+        reactorCommandGateway.send(new AddLocationCommand(
                         locationId,
                         HouseHoldId.of(locationRequestData.houseHoldId()),
                         locationRequestData.locationName()

@@ -2,14 +2,15 @@ package be.ww.household.query.projection;
 
 import be.ww.household.api.event.HouseHoldJoinedEvent;
 import be.ww.household.api.event.HouseHoldStartedEvent;
-import be.ww.household.api.event.MemberAdded;
-import be.ww.household.api.query.FindHouseHoldById;
-import be.ww.household.api.query.FindHouseHoldsForUser;
+import be.ww.household.api.event.MemberAddedEvent;
+import be.ww.household.api.query.FindHouseHoldByIdQuery;
+import be.ww.household.api.query.FindHouseHoldsForUserQuery;
 import be.ww.household.api.query.HouseHoldResponseData;
 import be.ww.household.query.repository.HouseHoldDocument;
 import be.ww.household.query.repository.HouseHoldRepository;
 import be.ww.household.query.repository.MemberField;
 import be.ww.shared.type.HouseHoldId;
+import be.ww.shared.type.UserId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.config.ProcessingGroup;
@@ -49,8 +50,7 @@ public class HouseHoldProjection {
 
     @EventHandler
     public void on(
-            final MemberAdded event,
-            final UnitOfWork<?> unitOfWork
+            final MemberAddedEvent event
     ) {
         log.info("Handle MemberAdded [{}]", event);
         houseHoldRepository.findByHouseHoldIdIs(event.houseHoldId().id())
@@ -70,8 +70,7 @@ public class HouseHoldProjection {
 
     @EventHandler
     public void on(
-            final HouseHoldJoinedEvent event,
-            final UnitOfWork<?> unitOfWork
+            final HouseHoldJoinedEvent event
     ) {
         log.info("Handle HouseHoldJoinedEvent [{}]", event);
         /*
@@ -93,9 +92,9 @@ public class HouseHoldProjection {
 
     @QueryHandler
     public HouseHoldResponseData handle(
-            final FindHouseHoldById query
+            final FindHouseHoldByIdQuery query
     ) {
-        return houseHoldRepository.findByHouseHoldIdIs(query.houseHoldId())
+        return houseHoldRepository.findByHouseHoldIdIs(query.houseHoldId().id())
                 .stream()
                 .map(houseHold -> new HouseHoldResponseData.HouseHold(
                         houseHold.getHouseHoldId()
@@ -108,9 +107,9 @@ public class HouseHoldProjection {
 
     @QueryHandler
     public HouseHoldResponseData handle(
-            final FindHouseHoldsForUser query
+            final FindHouseHoldsForUserQuery query
     ) {
-        return houseHoldRepository.findAllByUserId(query.userId())
+        return houseHoldRepository.findAllByUserId(query.userId().id())
                 .stream()
                 .map(houseHold -> new HouseHoldResponseData.HouseHold(
                         houseHold.getHouseHoldId()
@@ -122,12 +121,12 @@ public class HouseHoldProjection {
     }
 
     private void emitUpdateForUser(
-            final String userId
+            final UserId userId
     ) {
         queryUpdateEmitter.emit(
-                FindHouseHoldsForUser.class,
+                FindHouseHoldsForUserQuery.class,
                 query -> Objects.equals(query.userId(), userId),
-                handle(new FindHouseHoldsForUser(userId))
+                handle(new FindHouseHoldsForUserQuery(userId))
         );
     }
 
@@ -135,9 +134,9 @@ public class HouseHoldProjection {
             final HouseHoldId houseHoldId
     ) {
         queryUpdateEmitter.emit(
-                FindHouseHoldById.class,
-                query -> Objects.equals(query.houseHoldId(), houseHoldId.id()),
-                handle(new FindHouseHoldById(houseHoldId.id()))
+                FindHouseHoldByIdQuery.class,
+                query -> Objects.equals(query.houseHoldId(), houseHoldId),
+                handle(new FindHouseHoldByIdQuery(houseHoldId))
         );
     }
 
