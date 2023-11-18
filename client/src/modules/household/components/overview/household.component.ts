@@ -24,6 +24,7 @@ export class HouseholdComponent implements OnInit {
   locations: Location[];
   selectedAppliance!: Appliance;
   selectedLocation!: Location;
+  newLocation = '';
 
   constructor(private primengConfig: PrimeNGConfig) {
     this.locations = [
@@ -49,12 +50,11 @@ export class HouseholdComponent implements OnInit {
     console.log("added")
   }
 
-  addLocation() {
+  addLocation(string: string) {
     const lastLocationId = this.locations.length > 0 ? this.locations[this.locations.length - 1].locationId : 0;
     const nextLocationId = lastLocationId + 1;
-    const newLocation: Location = { locationId: nextLocationId, name: 'Beach House in Malibu' };
+    const newLocation: Location = { locationId: nextLocationId, name: string };
     this.locations.push(newLocation);
-    console.log(this.locations)
   }
 
 }
