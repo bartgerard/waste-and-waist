@@ -1,10 +1,10 @@
-package be.ww.store.web;
+package be.ww.store.command.web;
 
-import be.ww.household.api.command.StartHouseHoldCommand;
-import be.ww.shared.type.HouseHoldId;
+import be.ww.shared.type.ProductId;
+import be.ww.shared.type.ingredient.IngredientId;
+import be.ww.store.api.command.AddProductCommand;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.extensions.reactor.commandhandling.gateway.ReactorCommandGateway;
-import org.axonframework.extensions.reactor.queryhandling.gateway.ReactorQueryGateway;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,13 +24,12 @@ public class StoreCommandRestController {
     public Mono<Object> register(
             @RequestBody final ProductRequestData productRequestData
     ) {
-        final HouseHoldId houseHoldId = HouseHoldId.create();
-        return reactorCommandGateway.send(new StartHouseHoldCommand(
-                houseHoldId,
-                productRequestData.houseHoldName(),
-                productRequestData.userId(),
-                productRequestData.memberName(),
-                productRequestData.birthDate()
+        return reactorCommandGateway.send(new AddProductCommand(
+                IngredientId.of(productRequestData.ingredientId()),
+                ProductId.of(productRequestData.productId()),
+                productRequestData.productName(),
+                productRequestData.brand(),
+                productRequestData.stores()
         ));
     }
 
