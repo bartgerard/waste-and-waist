@@ -1,15 +1,13 @@
-/* eslint-disable prettier/prettier */
-
-import { Component, OnInit } from '@angular/core';
-import { PrimeNGConfig } from 'primeng/api';
+import { Component, OnInit } from '@angular/core'
+import { PrimeNGConfig } from 'primeng/api'
 
 interface Location {
-  locationId: number;
-  name: string;
+  locationId: number
+  name: string
 }
 
 interface Appliance {
-  type: string;
+  type: string
 }
 
 @Component({
@@ -18,13 +16,12 @@ interface Appliance {
   styleUrls: ['./household.component.scss'],
 })
 export class HouseholdComponent implements OnInit {
-
   title = 'client'
-  appliances: Appliance[];
-  locations: Location[];
-  selectedAppliance!: Appliance;
-  selectedLocation!: Location;
-  newLocation = '';
+  appliances: Appliance[]
+  locations: Location[]
+  selectedAppliance!: Appliance
+  selectedLocation!: Location
+  newLocation = ''
 
   constructor(private primengConfig: PrimeNGConfig) {
     this.locations = [
@@ -43,18 +40,23 @@ export class HouseholdComponent implements OnInit {
     ]
   }
   ngOnInit(): void {
-    console.log("init")
+    console.log('init')
   }
 
   add() {
-    console.log("added")
+    console.log('added')
   }
 
   addLocation(string: string) {
-    const lastLocationId = this.locations.length > 0 ? this.locations[this.locations.length - 1].locationId : 0;
-    const nextLocationId = lastLocationId + 1;
-    const newLocation: Location = { locationId: nextLocationId, name: string };
-    this.locations.push(newLocation);
+    const lastLocationId =
+      this.locations.length > 0
+        ? this.locations[this.locations.length - 1].locationId
+        : 0
+    const nextLocationId = lastLocationId + 1
+    const newLocation: Location = {
+      locationId: nextLocationId,
+      name: string.trim(),
+    }
+    this.locations.push(newLocation)
   }
-
 }
