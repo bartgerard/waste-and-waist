@@ -29,3 +29,73 @@ Content-Type: application/json
     "EGGS"
   ]
 }
+
+
+###
+# https://fic.colruytgroup.com/productinfo/nl/algc/4383344
+
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "ingredientId": "egg",
+  "productName": "Boni 10 Witte scharreleieren A 550 g",
+  "brand": "BONI",
+  "stores": [
+    "Colruyt"
+  ],
+  "unitQuantity": {
+    "amount": 10,
+    "unit": "PIECES"
+  },
+  "nutritionalFacts": {
+    "ENERGY_KJ": 521,
+    "ENERGY_KCAL": 125,
+    "FAT": 8,
+    "SATURATED_FAT": 2.3,
+    "CARBOHYDRATE": 0.5,
+    "SUGAR": 0.5,
+    "FIBRE": 0.5,
+    "PROTEIN": 13,
+    "SALT": 0.34
+  },
+  "allergens": [
+    "EGGS"
+  ]
+}
+
+###
+# https://www.ah.nl/producten/product/wi442922/ah-witte-vrije-uitloopeieren-m
+
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "ingredientId": "egg",
+  "productName": "AH Witte vrije uitloopeieren M",
+  "brand": "AH",
+  "stores": [
+    "Albert Heijn"
+  ],
+  "unitQuantity": {
+    "amount": 6,
+    "unit": "PIECES",
+    "weight": "53-63g per egg"
+  },
+  "nutritionalFacts": {
+    "ENERGY_KJ": 544,
+    "ENERGY_KCAL": 131,
+    "FAT": 9.1,
+    "SATURATED_FAT": 3,
+    "UNSATURATED_FAT": 4.3,
+    "CARBOHYDRATE": 0.2,
+    "SUGAR": 0.2,
+    "FIBRE": 0,
+    "PROTEIN": 12,
+    "SALT": 0.38
+  },
+  "allergens": [
+    "EGGS"
+  ]
+}
+
