@@ -1,7 +1,10 @@
 package be.ww.shared.type.ingredient;
 
-public record NutritionalFact(
+import be.ww.shared.type.Amount;
 
+public record NutritionalFact(
+        Type type,
+        Amount amount
 ) {
     public enum Type {
         ENERGY("kcal"),

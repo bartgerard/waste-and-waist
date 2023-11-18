@@ -1,9 +1,9 @@
 package be.ww.shared.type.ingredient;
 
-import java.math.BigDecimal;
+import be.ww.shared.type.Amount;
 
 public record Quantity(
-        BigDecimal amount,
+        Amount amount,
         Unit unit
 ) {
     public enum Unit {
