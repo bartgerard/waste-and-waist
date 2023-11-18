@@ -1,4 +1,4 @@
-package be.ww.stock.command.web;
+package be.ww.stock.web;
 
 import be.ww.shared.type.HouseHoldId;
 import be.ww.shared.type.LocationId;
@@ -11,28 +11,30 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 @RestController
-@RequestMapping
+@RequestMapping("locations")
 @CrossOrigin
 @RequiredArgsConstructor
-public class StockCommandRestController {
+public class LocationRestController {
 
     public static final int TIMEOUT_SECONDS = 5;
     private final ReactorCommandGateway reactorCommandGateway;
     private final ReactorQueryGateway reactorQueryGateway;
 
-    @PostMapping("locations")
-    public void addLocation(
+    @PostMapping
+    public Mono<Object> addLocation(
             @RequestBody final LocationRequestData locationRequestData
     ) {
         final LocationId locationId = LocationId.create();
-        reactorCommandGateway.send(new AddLocationCommand(
+        return reactorCommandGateway.send(new AddLocationCommand(
                         locationId,
                         HouseHoldId.of(locationRequestData.houseHoldId()),
                         locationRequestData.locationName()
                 ))
-                .block(); // TODO
+                .subscribeOn(Schedulers.parallel());
     }
 
 }

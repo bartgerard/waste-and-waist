@@ -1,4 +1,4 @@
-package be.ww.stock.command.web;
+package be.ww.stock.web;
 
 public record LocationRequestData(
         String houseHoldId,
