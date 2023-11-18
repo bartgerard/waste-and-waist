@@ -13,6 +13,12 @@ public record Amount(
     ) {
         notNull(value, "value is invalid [null]");
 
-        this.value = value.setScale(2, RoundingMode.HALF_EVEN);
+        this.value = value.setScale(2, RoundingMode.DOWN);
+    }
+
+    public static Amount of(
+            final BigDecimal value
+    ) {
+        return new Amount(value);
     }
 }

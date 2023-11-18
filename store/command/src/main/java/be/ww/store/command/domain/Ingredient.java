@@ -38,6 +38,5 @@ public class Ingredient {
             final ProductAddedEvent event
     ) {
         this.ingredientId = event.ingredientId();
-        // TODO
     }
 }
