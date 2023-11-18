@@ -3,10 +3,12 @@ package be.ww.household.command.domain;
 import be.ww.household.api.command.AddMemberCommand;
 import be.ww.household.api.command.DisbandHouseHoldCommand;
 import be.ww.household.api.command.JoinHouseHoldCommand;
+import be.ww.household.api.command.LeaveHouseHoldCommand;
 import be.ww.household.api.command.RemoveMemberCommand;
 import be.ww.household.api.command.StartHouseHoldCommand;
 import be.ww.household.api.event.HouseHoldDisbandedEvent;
 import be.ww.household.api.event.HouseHoldJoinedEvent;
+import be.ww.household.api.event.HouseHoldLeftEvent;
 import be.ww.household.api.event.HouseHoldStartedEvent;
 import be.ww.household.api.event.MemberAddedEvent;
 import be.ww.household.api.event.MemberRemovedEvent;
@@ -98,6 +100,15 @@ public class HouseHold {
     }
 
     @CommandHandler
+    public void handle(final LeaveHouseHoldCommand command) {
+        isTrue(getUsers().contains(command.userId()), "user isn't part of the household");
+        apply(new HouseHoldLeftEvent(
+                command.houseHoldId(),
+                command.userId()
+        ));
+    }
+
+    @CommandHandler
     public void handle(final DisbandHouseHoldCommand command) {
         apply(new HouseHoldDisbandedEvent(
                 command.houseHoldId()
@@ -121,13 +132,26 @@ public class HouseHold {
         if (members.isEmpty()) {
             markDeleted();
         }
-
     }
 
     @EventSourcingHandler
     public void on(final HouseHoldJoinedEvent event) {
         this.members.removeIf(member -> member.memberId().equals(event.memberId()));
         this.members.add(new Member(event.memberId(), event.userId()));
+    }
+
+    @EventSourcingHandler
+    public void on(final HouseHoldLeftEvent event) {
+        MemberId memberIdToRemove = members.stream()
+                .filter(member -> member.userId().equals(event.userId()))
+                .map(Member::memberId)
+                .findFirst()
+                .orElse(null);
+
+        if (memberIdToRemove != null) {
+            members.removeIf(member -> member.userId().equals(event.userId()));
+            members.add(new Member(memberIdToRemove));
+        }
     }
 
     @EventSourcingHandler
