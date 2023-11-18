@@ -1,11 +1,13 @@
-import { NgModule } from '@angular/core'
-import { RouterModule, Routes } from '@angular/router'
-import { OverviewComponent } from './components/overview/overview.component'
+/* eslint-disable prettier/prettier */
+
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HouseholdComponent } from './components/overview/household.component';
 
 const routes: Routes = [
   {
     path: 'households',
-    component: OverviewComponent,
+    component: HouseholdComponent,
   },
 ]
 
@@ -13,4 +15,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class HouseholdRoutingModule {}
+export class HouseholdRoutingModule { }

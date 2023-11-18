@@ -1,0 +1,27 @@
+<!-- eslint-disable prettier/prettier -->
+<h2>Households > Home</h2>
+<div class="centered-form">
+    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+        <div class="ui-grid-row form-element">
+                <input pInputText type="text" formControlName="search" class="p-inputtext-lg"
+                    placeholder="Search" name="search">
+        </div>
+        <div class="ui-grid-row form-element">
+            <tr>
+                <h3>Appliances</h3>
+            </tr>
+            <tr>
+                <p-selectButton [options]="appliances" (ngModel)="selectedAppliance" optionLabel="type"
+                    [multiple]="true">
+                </p-selectButton>
+            </tr>
+        </div>
+        <div class="ui-grid-row form-element">
+            <div class="ui-grid-col-2"></div>
+            <div class="ui-grid-col-6 form-element">
+                <p-button label="Add" (onClick)="add()" class="center-button p-button-lg"></p-button>
+            </div>
+            <div class="ui-grid-col-4"></div>
+        </div>
+    </div>
+</div>
