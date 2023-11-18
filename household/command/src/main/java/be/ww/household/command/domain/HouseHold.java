@@ -77,7 +77,7 @@ public class HouseHold {
 
     @CommandHandler
     public void handle(final RemoveMemberCommand command) {
-        isTrue(members.contains(command.memberId()), "unknown member");
+        isTrue(members.contains(command.memberId()), "member isn't part of the household");
 
         apply(new MemberRemovedEvent(
                 command.houseHoldId(),
