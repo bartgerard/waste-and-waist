@@ -1,4 +1,9 @@
 package be.ww.kitchen.api.event;
 
-public record RecipeCreatedEvent() {
+import be.ww.shared.type.RecipeId;
+
+public record RecipeCreatedEvent(
+		RecipeId recipeId,
+		String name
+) {
 }
