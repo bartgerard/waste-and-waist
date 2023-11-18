@@ -1,6 +1,7 @@
 package be.ww.household.command.web;
 
 import be.ww.household.api.command.AddMemberCommand;
+import be.ww.household.api.command.RemoveMemberCommand;
 import be.ww.household.api.command.StartHouseHoldCommand;
 import be.ww.household.api.query.FindHouseHoldByIdQuery;
 import be.ww.household.api.query.HouseHoldResponseData;
@@ -11,6 +12,7 @@ import org.axonframework.extensions.reactor.commandhandling.gateway.ReactorComma
 import org.axonframework.extensions.reactor.queryhandling.gateway.ReactorQueryGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -64,6 +66,18 @@ public class HouseHoldCommandRestController {
                         memberId,
                         memberRequestData.name(),
                         memberRequestData.birthDate()
+                ))
+                .block();
+    }
+
+    @DeleteMapping("{houseHoldId}/members/{memberId}")
+    public void removeMember(
+            @PathVariable final HouseHoldId houseHoldId,
+            @PathVariable final MemberId memberId
+    ) {
+        reactorCommandGateway.send(new RemoveMemberCommand(
+                        houseHoldId,
+                        memberId
                 ))
                 .block();
     }

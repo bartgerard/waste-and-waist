@@ -3,11 +3,13 @@ package be.ww.household.command.domain;
 import be.ww.household.api.command.AddMemberCommand;
 import be.ww.household.api.command.DisbandHouseHoldCommand;
 import be.ww.household.api.command.JoinHouseHoldCommand;
+import be.ww.household.api.command.RemoveMemberCommand;
 import be.ww.household.api.command.StartHouseHoldCommand;
 import be.ww.household.api.event.HouseHoldDisbandedEvent;
 import be.ww.household.api.event.HouseHoldJoinedEvent;
 import be.ww.household.api.event.HouseHoldStartedEvent;
 import be.ww.household.api.event.MemberAddedEvent;
+import be.ww.household.api.event.MemberRemovedEvent;
 import be.ww.shared.type.HouseHoldId;
 import be.ww.shared.type.MemberId;
 import be.ww.shared.type.UserId;
@@ -74,6 +76,16 @@ public class HouseHold {
     }
 
     @CommandHandler
+    public void handle(final RemoveMemberCommand command) {
+        isTrue(members.contains(command.memberId()), "unknown member");
+
+        apply(new MemberRemovedEvent(
+                command.houseHoldId(),
+                command.memberId()
+        ));
+    }
+
+    @CommandHandler
     public void handle(final JoinHouseHoldCommand command) {
         apply(new HouseHoldJoinedEvent(
                 command.houseHoldId(),
@@ -97,6 +109,15 @@ public class HouseHold {
     @EventSourcingHandler
     public void on(final MemberAddedEvent event) {
         this.members.add(event.memberId());
+    }
+
+    @EventSourcingHandler
+    public void on(final MemberRemovedEvent event) {
+        this.members.remove(event.memberId());
+        if (members.isEmpty()){
+            markDeleted();
+        }
+
     }
 
     @EventSourcingHandler

@@ -3,6 +3,7 @@ package be.ww.household.query.projection;
 import be.ww.household.api.event.HouseHoldJoinedEvent;
 import be.ww.household.api.event.HouseHoldStartedEvent;
 import be.ww.household.api.event.MemberAddedEvent;
+import be.ww.household.api.event.MemberRemovedEvent;
 import be.ww.household.api.query.FindHouseHoldByIdQuery;
 import be.ww.household.api.query.FindHouseHoldsForUserQuery;
 import be.ww.household.api.query.HouseHoldResponseData;
@@ -61,6 +62,25 @@ public class HouseHoldProjection {
                                 event.birthDate(),
                                 null
                         ))
+                        .build()
+                )
+                .ifPresent(houseHoldRepository::save);
+
+        emitUpdateForHouseHoldId(event.houseHoldId());
+    }
+
+    @EventHandler
+    public void on(
+            final MemberRemovedEvent event
+    ) {
+        log.info("Handle MemberRemoved [{}]", event);
+        houseHoldRepository.findByHouseHoldIdIs(event.houseHoldId().id())
+                .map(houseHoldDocument -> houseHoldDocument.toBuilder()
+                        .members(houseHoldDocument.getMembers()
+                                .stream()
+                                .filter(member -> !member.memberId().equals(event.memberId().id()))
+                                .collect(toUnmodifiableSet())
+                        )
                         .build()
                 )
                 .ifPresent(houseHoldRepository::save);
