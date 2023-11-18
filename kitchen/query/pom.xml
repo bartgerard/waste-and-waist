@@ -2,13 +2,31 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>be.ww</groupId>
-        <artifactId>kitchen</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-    </parent>
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>be.ww</groupId>
+		<artifactId>kitchen</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
 
-    <artifactId>kitchen-query</artifactId>
+	<artifactId>kitchen-query</artifactId>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-elasticsearch</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.axonframework</groupId>
+			<artifactId>axon-configuration</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>be.ww</groupId>
+			<artifactId>shared-types</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>be.ww</groupId>
+			<artifactId>kitchen-api</artifactId>
+		</dependency>
+	</dependencies>
 
 </project>
