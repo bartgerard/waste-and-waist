@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import be.ww.stock.command.StockCommandConfiguration;
-import be.ww.stock.query.configuration.StockQueryConfiguration;
+import be.ww.stock.query.StockQueryConfiguration;
 
 @Configuration
 @Import({

@@ -1,4 +1,4 @@
-package be.ww.stock.query.configuration;
+package be.ww.stock.query;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
