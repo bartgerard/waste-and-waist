@@ -1,14 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { PrimeNGConfig } from 'primeng/api'
-
-interface Location {
-  locationId: number
-  name: string
-}
-
-interface Appliance {
-  type: string
-}
+import { Location } from './Location'
+import { Appliance } from './Appliance'
 
 @Component({
   selector: 'app-household',
@@ -18,18 +11,48 @@ interface Appliance {
 export class HouseholdComponent implements OnInit {
   title = 'client'
   appliances: Appliance[]
-  locations: Location[]
-  selectedAppliance!: Appliance
+  locations!: Location[]
+  selectedAppliances: string[] = []
   selectedLocation!: Location
   newLocation = ''
 
   constructor(private primengConfig: PrimeNGConfig) {
     this.locations = [
-      { locationId: 1, name: 'Villa in Turkey' },
-      { locationId: 2, name: 'House in Wallonia' },
-      { locationId: 3, name: 'Apartment in New York' },
-      { locationId: 4, name: 'Cottage in Brazil' },
-      { locationId: 5, name: ' Mansion in Abu Dhabi' },
+      {
+        locationId: 1,
+        name: 'Villa in Turkey',
+        appliances: ['Microwave', 'Coffee Machine'],
+        provisions: ['Kitchenware', 'Bedding'],
+        facilities: ['Swimming Pool', 'Garden'],
+      },
+      {
+        locationId: 2,
+        name: 'House in Wallonia',
+        appliances: ['Oven', 'Fridge'],
+        provisions: ['Toiletries', 'Towels'],
+        facilities: ['Parking', 'Backyard'],
+      },
+      {
+        locationId: 3,
+        name: 'Apartment in New York',
+        appliances: ['Dishwasher', 'Toaster'],
+        provisions: ['Coffee Supplies', 'Linens'],
+        facilities: ['Gym', 'Roof Deck'],
+      },
+      {
+        locationId: 4,
+        name: 'Cottage in Brazil',
+        appliances: ['Blender', 'Freezer'],
+        provisions: ['Cleaning Supplies', 'Pillows'],
+        facilities: ['Barbecue Area', 'River Access'],
+      },
+      {
+        locationId: 5,
+        name: 'Mansion in Abu Dhabi',
+        appliances: ['Washing Machine', 'Dryer'],
+        provisions: ['Utensils', 'Blankets'],
+        facilities: ['Spa', 'Private Beach'],
+      },
     ]
     this.appliances = [
       { type: 'Microwave' },
@@ -58,6 +81,9 @@ export class HouseholdComponent implements OnInit {
     const newLocation: Location = {
       locationId: nextLocationId,
       name: string.trim(),
+      appliances: [],
+      provisions: [],
+      facilities: [],
     }
     this.locations.push(newLocation)
   }
@@ -69,5 +95,12 @@ export class HouseholdComponent implements OnInit {
     if (index !== -1) {
       this.locations.splice(index, 1)
     }
+  }
+
+  onLocationSelect(event: any) {
+    console.log(this.selectedAppliances)
+    this.selectedAppliances = this.selectedLocation
+      ? this.selectedLocation.appliances
+      : []
   }
 }

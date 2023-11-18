@@ -29,6 +29,7 @@
       </div>
       <p-table
         [value]="locations"
+        (onRowSelect)="onLocationSelect($event.data)"
         selectionMode="single"
         [(selection)]="selectedLocation"
         dataKey="locationId"
@@ -62,7 +63,7 @@
       <tr>
         <p-selectButton
           [options]="appliances"
-          (ngModel)="(selectedAppliance)"
+          (ngModel)="(selectedAppliances)"
           optionLabel="type"
           [multiple]="true">
         </p-selectButton>
