@@ -3,10 +3,10 @@ package be.ww.shared.type.ingredient;
 import be.ww.shared.type.Amount;
 
 public record NutritionalFact(
-        Type type,
+        Fact fact,
         Amount amount
 ) {
-    public enum Type {
+    public enum Fact {
         ENERGY("kcal"),
         PROTEIN("g"),
         CARBOHYDRATE("g"),
@@ -17,7 +17,7 @@ public record NutritionalFact(
 
         private final String unit;
 
-        Type(final String unit) {
+        Fact(final String unit) {
             this.unit = unit;
         }
 
