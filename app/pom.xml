@@ -72,7 +72,7 @@
         </dependency>
         <dependency>
             <groupId>be.ww</groupId>
-            <artifactId>user</artifactId>
+            <artifactId>user-service</artifactId>
         </dependency>
 
         <!-- 3rd party -->

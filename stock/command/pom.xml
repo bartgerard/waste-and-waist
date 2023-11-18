@@ -35,24 +35,28 @@
             <artifactId>stock-adapter</artifactId>
         </dependency>
 
-        <!-- 3rd party -->
+	    <!-- 3rd party -->
 
-        <!-- spring -->
+	    <!-- spring -->
 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-elasticsearch</artifactId>
-        </dependency>
+	    <dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context</artifactId>
+	    </dependency>
+	    <dependency>
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-elasticsearch</artifactId>
+	    </dependency>
 
-        <!-- axon -->
-        <dependency>
-            <groupId>org.axonframework</groupId>
-            <artifactId>axon-spring</artifactId>
-        </dependency>
+	    <!-- axon -->
+	    <dependency>
+		    <groupId>org.axonframework</groupId>
+		    <artifactId>axon-spring</artifactId>
+	    </dependency>
+	    <dependency>
+		    <groupId>be.ww</groupId>
+		    <artifactId>store-api</artifactId>
+	    </dependency>
 
     </dependencies>
 

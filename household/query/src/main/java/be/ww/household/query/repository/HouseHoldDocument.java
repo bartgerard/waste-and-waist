@@ -23,6 +23,9 @@ public class HouseHoldDocument {
     @Field(name = "house_hold_id", type = FieldType.Keyword, norms = false)
     String houseHoldId;
 
+    @Field(name = "house_hold_name", type = FieldType.Keyword, norms = false, index = false)
+    String houseHoldName;
+
     @Singular
     @Field(name = "members", type = FieldType.Nested)
     Set<MemberField> members;

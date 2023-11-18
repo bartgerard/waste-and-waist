@@ -1,0 +1,28 @@
+.centered-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(255, 248, 232);
+}
+
+.form-element {
+    margin-bottom: 10px;
+}
+
+.center-button {
+    display: flex;
+    justify-content: center;
+}
+
+.label-spacing {
+    margin-bottom: 10px;
+}
+
+.block-div {
+    display: inline-flex;
+}
+
+.margin-left-10 {
+    margin-left: 20px;
+}

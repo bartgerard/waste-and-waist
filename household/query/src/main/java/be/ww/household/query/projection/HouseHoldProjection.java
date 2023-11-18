@@ -35,6 +35,22 @@ public class HouseHoldProjection {
     private final HouseHoldRepository houseHoldRepository;
     private final QueryUpdateEmitter queryUpdateEmitter;
 
+    private static HouseHoldResponseData.HouseHold map(
+            final HouseHoldDocument houseHold
+    ) {
+        return new HouseHoldResponseData.HouseHold(
+                houseHold.getHouseHoldId(),
+                houseHold.getMembers()
+                        .stream()
+                        .map(member -> new HouseHoldResponseData.Member(
+                                member.memberId(),
+                                member.name(),
+                                member.birthDate()
+                        ))
+                        .toList()
+        );
+    }
+
     @EventHandler
     public void on(
             final HouseHoldStartedEvent event,
@@ -43,6 +59,7 @@ public class HouseHoldProjection {
         log.info("Handle HouseHoldStartedEvent [{}]", event);
         houseHoldRepository.save(HouseHoldDocument.builder()
                 .houseHoldId(event.houseHoldId().id())
+                .houseHoldName(event.houseHoldName())
                 .build()
         );
 
@@ -116,9 +133,7 @@ public class HouseHoldProjection {
     ) {
         return houseHoldRepository.findByHouseHoldIdIs(query.houseHoldId().id())
                 .stream()
-                .map(houseHold -> new HouseHoldResponseData.HouseHold(
-                        houseHold.getHouseHoldId()
-                ))
+                .map(HouseHoldProjection::map)
                 .collect(collectingAndThen(
                         toUnmodifiableSet(),
                         HouseHoldResponseData::new
@@ -131,9 +146,7 @@ public class HouseHoldProjection {
     ) {
         return houseHoldRepository.findAllByUserId(query.userId().id())
                 .stream()
-                .map(houseHold -> new HouseHoldResponseData.HouseHold(
-                        houseHold.getHouseHoldId()
-                ))
+                .map(HouseHoldProjection::map)
                 .collect(collectingAndThen(
                         toUnmodifiableSet(),
                         HouseHoldResponseData::new

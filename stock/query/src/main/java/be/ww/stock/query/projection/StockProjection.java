@@ -1,5 +1,6 @@
 package be.ww.stock.query.projection;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -10,9 +11,13 @@ import org.axonframework.queryhandling.QueryUpdateEmitter;
 import org.springframework.stereotype.Component;
 
 import be.ww.shared.type.LocationId;
+import be.ww.shared.type.ingredient.Quantity;
 import be.ww.stock.api.event.AppliancesAddedEvent;
 import be.ww.stock.api.event.LocationAddedEvent;
 import be.ww.stock.api.event.LocationRemovedEvent;
+import be.ww.stock.api.event.ProvisionDisposeEvent;
+import be.ww.stock.api.event.ProvisionsConsumedEvent;
+import be.ww.stock.api.event.ProvisionsStoredEvent;
 import be.ww.stock.api.event.StorageFacilitiesAddedEvent;
 import be.ww.stock.api.query.FindLocationByIdQuery;
 import be.ww.stock.api.query.LocationResponseData;
@@ -30,7 +35,6 @@ import lombok.extern.slf4j.Slf4j;
 public class StockProjection {
 	private final LocationRepository locationRepository;
 	private final QueryUpdateEmitter queryUpdateEmitter;
-
 
 	@EventHandler
 	public void on(
@@ -107,6 +111,49 @@ public class StockProjection {
 						.build()
 				)
 				.orElseThrow(() -> new IllegalArgumentException("no appliances found on this location"));
+	}
+
+	@EventHandler
+	public void on(
+			final ProvisionsConsumedEvent event
+	) throws IllegalAccessException {
+		LocationDocument product = locationRepository.findByProductId(event.productId().id())
+				.orElseThrow(() -> new IllegalAccessException("Can't reduce stock that is not present"));
+		Quantity leftOverQuantity = product.getQuantity().reduce(event.quantity());
+		if (leftOverQuantity.amount().value().equals(BigDecimal.ZERO)) {
+			locationRepository.delete(product);
+		} else {
+			locationRepository.save(LocationDocument.builder()
+					.productId(event.productId().id())
+					.provisionId(event.provisionId().id())
+					.quantity(leftOverQuantity)
+					.build()
+			);
+		}
+	}
+
+	@EventHandler
+	public void on(
+			final ProvisionsStoredEvent event
+	) {
+		locationRepository.save(LocationDocument.builder()
+				.productId(event.productId().id())
+				.ingredientId(event.ingredientId().id())
+				.quantity(event.quantity())
+				.bestBefore(event.bestBeforeDay().day())
+				.usedBy(event.useByDay().day())
+				.build()
+		);
+
+	}
+
+	@EventHandler
+	public void on(
+			final ProvisionDisposeEvent event
+	) throws IllegalAccessException {
+		LocationDocument toDeleteProvision = locationRepository.findByProvisionId(event.provisionId().id())
+				.orElseThrow(() -> new IllegalAccessException("Can't reduce stock that is not present"));
+		locationRepository.delete(toDeleteProvision);
 	}
 
 	private void emitUpdateFoLocationId(

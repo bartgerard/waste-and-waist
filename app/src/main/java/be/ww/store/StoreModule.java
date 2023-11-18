@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Import;
         StoreQueryConfiguration.class
 })
 @ComponentScan({
-        "be.ww.household.command.web",
-        "be.ww.household.query.web"
+        "be.ww.store.command.web",
+        "be.ww.store.query.web"
 })
 public class StoreModule {
 }

@@ -1,0 +1,56 @@
+<!-- eslint-disable prettier/prettier -->
+<h2>Households > Home</h2>
+<div class="centered-form">
+    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+        <div class="ui-grid-row form-element">
+            <div class="block-div">
+                    <div class="ui-grid-col-6">
+                        <input pInputText type="text" formControlName="search" class="p-inputtext-lg" placeholder="Add location"
+                            name="new-location">
+                    </div>
+                    <div class="col-sm-2 margin-left-10">
+                        <p-button label="Add location" (onClick)="addLocation()" class="center-button p-button-lg"></p-button>
+                    </div>
+                </div>
+        </div>
+        <div class="ui-grid-row form-element">
+            <tr>
+                <h3>
+                    <a>Locations </a>
+                    <i class="pi pi-home"></i>
+                </h3>
+            </tr>
+            <p-table [value]="locations" selectionMode="single" [(selection)]="selectedLocation" dataKey="locationId"
+                [scrollable]="true" scrollHeight="400px" [virtualScrollItemSize]="50"
+                [tableStyle]="{'min-width': '20rem'}">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-location>
+                    <tr [pSelectableRow]="location">
+                        <td>{{location.name}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div class="ui-grid-row form-element">
+            <tr>
+                <h3>
+                    <a>Appliances </a>
+                    <i class="pi pi-instagram"></i>
+                </h3>
+            </tr>
+            <tr>
+                <p-selectButton [options]="appliances" (ngModel)="selectedAppliance" optionLabel="type"
+                    [multiple]="true">
+                </p-selectButton>
+            </tr>
+        </div>
+        <div class="ui-grid-row form-element">
+            <div class="ui-grid-col-2"></div>
+            <div class="ui-grid-col-4"></div>
+        </div>
+    </div>
+</div>

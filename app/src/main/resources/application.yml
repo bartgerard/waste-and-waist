@@ -11,7 +11,7 @@ springdoc:
     tags-sorter: alpha
     operations-sorter: method
   packages-to-scan:
-    - be.ww.household.command.web
+    - be.ww.household.web
     - be.ww.stock.command.web
     - be.ww.user.web
     - be.ww.app

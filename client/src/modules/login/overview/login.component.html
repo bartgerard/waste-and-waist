@@ -1,0 +1,41 @@
+<!-- eslint-disable prettier/prettier -->
+<div class="centered-form">
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+            <div class="ui-grid-row form-element">
+                <img src="assets/logo.png" alt="Logo">
+            </div>
+            <div class="ui-grid-row form-element">
+                <div class="ui-grid-col-2 label-spacing">
+                    Username
+                </div>
+                <div class="ui-grid-col-6">
+                    <input pInputText type="text" formControlName="username" class="p-inputtext-lg"
+                        placeholder="Username" name="username">
+                </div>
+            </div>
+            <div class="ui-grid-row form-element">
+                <div class="ui-grid-col-2 label-spacing">
+                    Password
+                </div>
+                <div class="ui-grid-col-6">
+                    <input pInputText type="password" formControlName="password" class="p-inputtext-lg"
+                        placeholder="Password" name="password">
+                </div>
+                <div class="ui-grid-col-4">
+                    <div [hidden]="formGroup.controls['password'].valid || !formGroup.controls['password'].dirty"
+                        class="alert alert-danger">
+                        Password is required
+                    </div>
+                </div>
+            </div>
+            <div class="ui-grid-row form-element">
+                <div class="ui-grid-col-2"></div>
+                <div class="ui-grid-col-6 form-element">
+                    <p-button label="Login" (onClick)="login()" class="center-button p-button-lg"></p-button>
+                </div>
+                <div class="ui-grid-col-4"></div>
+            </div>
+        </div>
+    </form>
+</div>
