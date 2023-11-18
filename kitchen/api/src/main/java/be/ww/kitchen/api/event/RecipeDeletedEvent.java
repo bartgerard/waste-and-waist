@@ -1,4 +1,8 @@
 package be.ww.kitchen.api.event;
 
-public record RecipeDeletedEvent() {
+import be.ww.shared.type.RecipeId;
+
+public record RecipeDeletedEvent(
+		RecipeId recipeId
+) {
 }
