@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 
-import { Component, OnInit } from '@angular/core'
-import { PrimeNGConfig } from 'primeng/api'
+import { Component, OnInit } from '@angular/core';
+import { PrimeNGConfig } from 'primeng/api';
 
 interface Location {
   locationId: number;
@@ -23,7 +23,7 @@ export class HouseholdComponent implements OnInit {
   appliances: Appliance[];
   locations: Location[];
   selectedAppliance!: Appliance;
-selectedLocation!: Location;
+  selectedLocation!: Location;
 
   constructor(private primengConfig: PrimeNGConfig) {
     this.locations = [
@@ -47,6 +47,14 @@ selectedLocation!: Location;
 
   add() {
     console.log("added")
+  }
+
+  addLocation() {
+    const lastLocationId = this.locations.length > 0 ? this.locations[this.locations.length - 1].locationId : 0;
+    const nextLocationId = lastLocationId + 1;
+    const newLocation: Location = { locationId: nextLocationId, name: 'Beach House in Malibu' };
+    this.locations.push(newLocation);
+    console.log(this.locations)
   }
 
 }
