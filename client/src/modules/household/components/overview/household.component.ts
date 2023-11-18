@@ -37,10 +37,12 @@ export class HouseholdComponent implements OnInit {
       { type: 'Oven' },
       { type: 'Fridge' },
       { type: 'Frier' },
+      { type: 'Blender' },
+      { type: 'Toaster' },
     ]
   }
   ngOnInit(): void {
-    console.log('init')
+    console.log('ngOnInit')
   }
 
   add() {
@@ -58,5 +60,14 @@ export class HouseholdComponent implements OnInit {
       name: string.trim(),
     }
     this.locations.push(newLocation)
+  }
+
+  delete(locationId: number) {
+    const index = this.locations.findIndex(
+      location => location.locationId === locationId
+    )
+    if (index !== -1) {
+      this.locations.splice(index, 1)
+    }
   }
 }
