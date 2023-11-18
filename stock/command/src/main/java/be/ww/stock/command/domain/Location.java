@@ -31,7 +31,6 @@ import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.CreationPolicy;
 import org.axonframework.spring.stereotype.Aggregate;
 
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -156,7 +155,7 @@ public class Location {
 
     @EventSourcingHandler
     public void on(final ProvisionsConsumedEvent event) throws IllegalAccessException {
-        this.quantity.reduce(event.quantity());
+        this.quantity.subtract(event.quantity());
     }
 
     @EventSourcingHandler
