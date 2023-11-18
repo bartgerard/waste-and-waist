@@ -1,0 +1,28 @@
+###
+# https://fic.colruytgroup.com/productinfo/nl/cogo/3501748
+
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "ingredientId": "egg",
+  "productName": "Boni Selection Vrije uyitloop eieren M 12 stuks",
+  "brand": "BONI",
+  "stores": [
+    "Colruyt"
+  ],
+  "unitQuantity": {
+    "amount": 12,
+    "unit": "PIECES"
+  },
+  "nutritionalFacts": {
+    "ENERGY": 125,
+    "PROTEIN": 13,
+    "CARBOHYDRATE": 0.5,
+    "SUGAR": 0.5,
+    "SATURATED_FAT": 2.3,
+    "FAT": 8,
+    "FIBRE": 0.5,
+    "SALT": 0.34
+  }
+}
