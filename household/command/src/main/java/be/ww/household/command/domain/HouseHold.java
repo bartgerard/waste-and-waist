@@ -126,7 +126,8 @@ public class HouseHold {
 
     @EventSourcingHandler
     public void on(final HouseHoldJoinedEvent event) {
-        //this.members.add(event.userId());
+        this.members.removeIf(member -> member.memberId().equals(event.memberId()));
+        this.members.add(new Member(event.memberId(), event.userId()));
     }
 
     @EventSourcingHandler
