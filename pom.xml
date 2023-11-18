@@ -186,7 +186,7 @@
             </dependency>
             <dependency>
                 <groupId>be.ww</groupId>
-                <artifactId>user</artifactId>
+                <artifactId>user-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- 3rd party -->
