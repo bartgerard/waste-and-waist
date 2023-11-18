@@ -28,8 +28,8 @@ public class StockProductProjection {
 				.productId(event.productId().id())
 				.ingredientId(event.ingredientId().id())
 				.quantity(event.quantity())
-				.bestBefore(event.bestBefore())
-				.usedBy(event.usedBy())
+				.bestBefore(event.bestBeforeDay().day())
+				.usedBy(event.useByDay().day())
 				.build()
 		);
 

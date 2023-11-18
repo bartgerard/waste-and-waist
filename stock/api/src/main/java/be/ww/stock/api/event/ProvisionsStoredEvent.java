@@ -1,12 +1,12 @@
 package be.ww.stock.api.event;
 
-import java.time.LocalDate;
-
 import be.ww.shared.type.LocationId;
 import be.ww.shared.type.ProductId;
 import be.ww.shared.type.ProvisionId;
+import be.ww.shared.type.ingredient.BestBeforeDay;
 import be.ww.shared.type.ingredient.IngredientId;
 import be.ww.shared.type.ingredient.Quantity;
+import be.ww.shared.type.ingredient.UseByDay;
 
 
 public record ProvisionsStoredEvent(
@@ -15,8 +15,8 @@ public record ProvisionsStoredEvent(
 		ProvisionId provisionId,
 		IngredientId ingredientId,
 		Quantity quantity,
-		LocalDate bestBefore,
-		LocalDate usedBy
+		BestBeforeDay bestBeforeDay,
+		UseByDay useByDay
 
 
 ) {

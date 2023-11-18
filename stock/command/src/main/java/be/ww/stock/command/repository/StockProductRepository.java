@@ -9,5 +9,7 @@ public interface StockProductRepository extends ElasticsearchRepository<StockPro
 
 	Optional<StockProductDocument> findByProductId(String productId);
 
+	Optional<StockProductDocument> findByProvisionId(String provisionId);
+
 
 }
