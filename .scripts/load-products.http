@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
   "ingredientId": "egg",
-  "productName": "Boni Selection Vrije uyitloop eieren M 12 stuks",
+  "productName": "Boni Selection Vrije uitloop eieren M 12 stuks",
   "brand": "BONI",
   "stores": [
     "Colruyt"
