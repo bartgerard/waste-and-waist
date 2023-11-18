@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping(path = "/house-holds")
+@RequestMapping(path = "/products")
 @CrossOrigin
 @RequiredArgsConstructor
-public class StoreCommandRestController {
+public class ProductRestController {
 
     private final ReactorCommandGateway reactorCommandGateway;
 
