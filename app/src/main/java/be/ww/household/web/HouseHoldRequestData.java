@@ -1,4 +1,4 @@
-package be.ww.household.command.web;
+package be.ww.household.web;
 
 import java.time.LocalDate;
 

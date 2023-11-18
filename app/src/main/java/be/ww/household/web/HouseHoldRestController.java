@@ -1,4 +1,4 @@
-package be.ww.household.command.web;
+package be.ww.household.web;
 
 import be.ww.household.api.command.AddMemberCommand;
 import be.ww.household.api.command.StartHouseHoldCommand;
@@ -11,6 +11,7 @@ import org.axonframework.extensions.reactor.commandhandling.gateway.ReactorComma
 import org.axonframework.extensions.reactor.queryhandling.gateway.ReactorQueryGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +28,7 @@ import java.time.Duration;
 @RequestMapping(path = "/house-holds")
 @CrossOrigin
 @RequiredArgsConstructor
-public class HouseHoldCommandRestController {
+public class HouseHoldRestController {
 
     public static final int TIMEOUT_SECONDS = 5;
     private final ReactorCommandGateway reactorCommandGateway;
@@ -55,17 +56,27 @@ public class HouseHoldCommandRestController {
 
     @PostMapping("{houseHoldId}/members")
     public void register(
-            @PathVariable final HouseHoldId houseHoldId,
+            @PathVariable final String houseHoldId,
             @RequestBody final MemberRequestData memberRequestData
     ) {
         final MemberId memberId = MemberId.create();
         reactorCommandGateway.send(new AddMemberCommand(
-                        houseHoldId,
+                        HouseHoldId.of(houseHoldId),
                         memberId,
                         memberRequestData.name(),
                         memberRequestData.birthDate()
                 ))
                 .block();
+    }
+
+    @GetMapping("{houseHoldId}")
+    public Flux<HouseHoldResponseData> findByHouseHoldId(
+            @PathVariable final String houseHoldId
+    ) {
+        return reactorQueryGateway.queryUpdates(
+                new FindHouseHoldByIdQuery(HouseHoldId.of(houseHoldId)),
+                ResponseTypes.instanceOf(HouseHoldResponseData.class)
+        );
     }
 
 

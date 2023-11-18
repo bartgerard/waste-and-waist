@@ -1,4 +1,4 @@
-package be.ww.household.query.web;
+package be.ww.household.web;
 
 import be.ww.household.api.query.FindHouseHoldsForUserQuery;
 import be.ww.household.api.query.HouseHoldResponseData;
@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 
 @Controller
 @RequiredArgsConstructor
-public class HouseHoldQueryController {
+public class HouseHoldSocketController {
 
     private final ReactorQueryGateway reactorQueryGateway;
 

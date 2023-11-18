@@ -31,7 +31,6 @@ public class StockProjection {
 	private final LocationRepository locationRepository;
 	private final QueryUpdateEmitter queryUpdateEmitter;
 
-
 	@EventHandler
 	public void on(
 			final LocationAddedEvent event
