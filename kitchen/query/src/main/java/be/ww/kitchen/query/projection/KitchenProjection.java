@@ -8,6 +8,7 @@ import org.axonframework.queryhandling.QueryHandler;
 import org.axonframework.queryhandling.QueryUpdateEmitter;
 import org.springframework.stereotype.Component;
 
+import be.ww.kitchen.api.command.DeleteRecipeCommand;
 import be.ww.kitchen.api.event.RecipeCreatedEvent;
 import be.ww.kitchen.api.query.FindRecipeByIdQuery;
 import be.ww.kitchen.query.repository.KitchenDocument;
@@ -47,6 +48,17 @@ public class KitchenProjection {
 				.recipeId(event.recipeId().id())
 				.name(event.name())
 				.build()
+		);
+		emitUpdateForRecipeId(event.recipeId());
+	}
+
+	@EventHandler
+	public void on(
+			final DeleteRecipeCommand event
+	) {
+		log.info("RecipeCreated deleted event [{}]", event);
+		kitchenRepository.findByRecipeId(event.recipeId().id()).ifPresent(
+				this.kitchenRepository::delete
 		);
 		emitUpdateForRecipeId(event.recipeId());
 	}
