@@ -32,7 +32,7 @@ import static org.axonframework.modelling.command.AggregateLifecycle.markDeleted
 
 @Aggregate
 public class HouseHold {
-    private final Set<MemberId> members = new HashSet<>();
+    private final Set<Member> members = new HashSet<>();
 
     @AggregateIdentifier
     private HouseHoldId houseHoldId;
@@ -77,7 +77,7 @@ public class HouseHold {
 
     @CommandHandler
     public void handle(final RemoveMemberCommand command) {
-        isTrue(members.contains(command.memberId()), "member isn't part of the household");
+        isTrue(isMember(command.memberId()), "member isn't part of the household");
 
         apply(new MemberRemovedEvent(
                 command.houseHoldId(),
@@ -87,6 +87,9 @@ public class HouseHold {
 
     @CommandHandler
     public void handle(final JoinHouseHoldCommand command) {
+        isTrue(isMember(command.memberId()), "member isn't part of the household");
+        isTrue(!getUsers().contains(command.userId()), "user already in household");
+
         apply(new HouseHoldJoinedEvent(
                 command.houseHoldId(),
                 command.memberId(),
@@ -108,13 +111,14 @@ public class HouseHold {
 
     @EventSourcingHandler
     public void on(final MemberAddedEvent event) {
-        this.members.add(event.memberId());
+        this.members.add(new Member(event.memberId()));
     }
 
     @EventSourcingHandler
     public void on(final MemberRemovedEvent event) {
-        this.members.remove(event.memberId());
-        if (members.isEmpty()){
+        members.removeIf(member -> member.memberId().equals(event.memberId()));
+
+        if (members.isEmpty()) {
             markDeleted();
         }
 
@@ -129,5 +133,18 @@ public class HouseHold {
     public void on(final HouseHoldDisbandedEvent event) {
         markDeleted();
     }
+    public Set<UserId> getUsers() {
+        Set<UserId> userSet = new HashSet<>();
+        for (Member member : members) {
+            userSet.add(member.userId());
+        }
+        return userSet;
+    }
+
+    public boolean isMember(MemberId memberId) {
+        return members.stream()
+                .anyMatch(member -> member.memberId().equals(memberId));
+    }
+
 
 }
