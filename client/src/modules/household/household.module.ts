@@ -6,6 +6,8 @@ import { HouseholdComponent } from './components/overview/household.component'
 import { ButtonModule } from 'primeng/button'
 import { SelectButtonModule } from 'primeng/selectbutton'
 import { InputTextModule } from 'primeng/inputtext'
+import { FormsModule } from '@angular/forms'
+import { CardModule } from 'primeng/card'
 
 @NgModule({
   imports: [
@@ -15,6 +17,8 @@ import { InputTextModule } from 'primeng/inputtext'
     ButtonModule,
     SelectButtonModule,
     InputTextModule,
+    FormsModule,
+    CardModule,
   ],
   declarations: [HouseholdComponent],
   providers: [],

@@ -55,13 +55,16 @@ export class HouseholdComponent implements OnInit {
       },
     ]
     this.appliances = [
-      { type: 'Microwave' },
-      { type: 'Coffee machine' },
-      { type: 'Oven' },
-      { type: 'Fridge' },
-      { type: 'Frier' },
-      { type: 'Blender' },
-      { type: 'Toaster' },
+      { name: 'Blender', image: 'assets/appliances/blender.png' },
+      {
+        name: 'Coffee Machine',
+        image: 'assets/appliances/coffee machine.png',
+      },
+      { name: 'Fridge', image: 'assets/appliances/fridge.png' },
+      { name: 'Frier', image: 'assets/appliances/frier.png' },
+      { name: 'Microwave', image: 'assets/appliances/microwave.png' },
+      { name: 'Oven', image: 'assets/appliances/oven.png' },
+      { name: 'Toaster', image: 'assets/appliances/toaster.png' },
     ]
   }
   ngOnInit(): void {
@@ -97,10 +100,11 @@ export class HouseholdComponent implements OnInit {
     }
   }
 
-  onLocationSelect(event: any) {
-    console.log(this.selectedAppliances)
-    this.selectedAppliances = this.selectedLocation
+  onLocationSelect(selectedLocation: Location) {
+    console.log(selectedLocation)
+    this.selectedAppliances = selectedLocation.appliances
       ? this.selectedLocation.appliances
       : []
+    console.log(this.selectedAppliances)
   }
 }

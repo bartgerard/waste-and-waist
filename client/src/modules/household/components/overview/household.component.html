@@ -60,18 +60,16 @@
           <i class="pi pi-instagram"></i>
         </h3>
       </tr>
-      <tr>
-        <p-selectButton
-          [options]="appliances"
-          (ngModel)="(selectedAppliances)"
-          optionLabel="type"
-          [multiple]="true">
-        </p-selectButton>
+      <tr class="block-div">
+        <p-card
+          *ngFor="let appliance of appliances"
+          [header]="appliance.name"
+          [style]="{ width: '142px' }">
+          <ng-template pTemplate="header">
+            <img alt="Card" [src]="appliance.image" />
+          </ng-template>
+        </p-card>
       </tr>
-    </div>
-    <div class="ui-grid-row form-element">
-      <div class="ui-grid-col-2"></div>
-      <div class="ui-grid-col-4"></div>
     </div>
   </div>
 </div>
