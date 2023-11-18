@@ -55,25 +55,30 @@ public class HouseHoldRestController {
     }
 
     @PostMapping("{houseHoldId}/members")
-    public void register(
+    public Mono<HouseHoldResponseData> register(
             @PathVariable final String houseHoldId,
             @RequestBody final MemberRequestData memberRequestData
     ) {
         final MemberId memberId = MemberId.create();
-        reactorCommandGateway.send(new AddMemberCommand(
+        return reactorCommandGateway.send(new AddMemberCommand(
                         HouseHoldId.of(houseHoldId),
                         memberId,
                         memberRequestData.name(),
                         memberRequestData.birthDate()
                 ))
-                .block();
+                .transform(objectMono -> Mono.zip(
+                                        objectMono.subscribeOn(Schedulers.parallel()),
+                                        accountSubscriptionQuery(HouseHoldId.of(houseHoldId)).subscribeOn(Schedulers.parallel())
+                                )
+                                .map(Tuple2::getT2)
+                );
     }
 
     @GetMapping("{houseHoldId}")
-    public Flux<HouseHoldResponseData> findByHouseHoldId(
+    public Mono<HouseHoldResponseData> findByHouseHoldId(
             @PathVariable final String houseHoldId
     ) {
-        return reactorQueryGateway.queryUpdates(
+        return reactorQueryGateway.query(
                 new FindHouseHoldByIdQuery(HouseHoldId.of(houseHoldId)),
                 ResponseTypes.instanceOf(HouseHoldResponseData.class)
         );
