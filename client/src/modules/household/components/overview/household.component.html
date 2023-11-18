@@ -3,6 +3,17 @@
 <div class="centered-form">
     <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
         <div class="ui-grid-row form-element">
+            <div class="block-div">
+                    <div class="ui-grid-col-6">
+                        <input pInputText type="text" formControlName="search" class="p-inputtext-lg" placeholder="Add location"
+                            name="new-location">
+                    </div>
+                    <div class="col-sm-2 margin-left-10">
+                        <p-button label="Add location" (onClick)="addLocation()" class="center-button p-button-lg"></p-button>
+                    </div>
+                </div>
+        </div>
+        <div class="ui-grid-row form-element">
             <tr>
                 <h3>
                     <a>Locations </a>
@@ -10,7 +21,8 @@
                 </h3>
             </tr>
             <p-table [value]="locations" selectionMode="single" [(selection)]="selectedLocation" dataKey="locationId"
-                [tableStyle]="{'min-width': '50rem'}">
+                [scrollable]="true" scrollHeight="400px" [virtualScrollItemSize]="50"
+                [tableStyle]="{'min-width': '20rem'}">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Name</th>
@@ -22,10 +34,6 @@
                     </tr>
                 </ng-template>
             </p-table>
-        </div>
-        <div class="ui-grid-row form-element">
-            <input pInputText type="text" formControlName="search" class="p-inputtext-lg" placeholder="Search"
-                name="search">
         </div>
         <div class="ui-grid-row form-element">
             <tr>
@@ -42,9 +50,6 @@
         </div>
         <div class="ui-grid-row form-element">
             <div class="ui-grid-col-2"></div>
-            <div class="ui-grid-col-6 form-element">
-                <p-button label="Add" (onClick)="add()" class="center-button p-button-lg"></p-button>
-            </div>
             <div class="ui-grid-col-4"></div>
         </div>
     </div>

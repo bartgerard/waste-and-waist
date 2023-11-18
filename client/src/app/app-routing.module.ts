@@ -11,7 +11,7 @@ const routes: Routes = [];
 })
 export class AppRoutingModule {
   constructor(private router: Router) {
-    this.router.navigateByUrl('/login');
+    // this.router.navigateByUrl('/login');
   }
 
 }
