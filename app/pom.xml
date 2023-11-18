@@ -70,6 +70,10 @@
             <groupId>be.ww</groupId>
             <artifactId>kitchen-query</artifactId>
         </dependency>
+        <dependency>
+            <groupId>be.ww</groupId>
+            <artifactId>user</artifactId>
+        </dependency>
 
         <!-- 3rd party -->
         <!-- spring -->
