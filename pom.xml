@@ -184,7 +184,11 @@
                 <artifactId>kitchen-query</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>be.ww</groupId>
+                <artifactId>user</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!-- 3rd party -->
 
             <!-- spring modulith -->
