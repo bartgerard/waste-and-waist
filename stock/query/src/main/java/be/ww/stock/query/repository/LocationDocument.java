@@ -28,6 +28,9 @@ public class LocationDocument {
     @Field(name = "location_id", type = FieldType.Keyword, norms = false)
     String locationId;
 
+    @Field(name = "house_hold_id", type = FieldType.Keyword, norms = false)
+    String houseHoldId;
+
     @Field(name = "name", type = FieldType.Keyword, norms = false)
     String name;
 

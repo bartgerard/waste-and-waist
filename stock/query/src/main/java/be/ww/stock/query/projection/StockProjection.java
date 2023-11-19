@@ -10,7 +10,9 @@ import be.ww.stock.api.event.ProvisionsConsumedEvent;
 import be.ww.stock.api.event.ProvisionsStoredEvent;
 import be.ww.stock.api.event.StorageFacilitiesAddedEvent;
 import be.ww.stock.api.query.FindLocationByIdQuery;
+import be.ww.stock.api.query.FindLocationsByHouseHoldIdQuery;
 import be.ww.stock.api.query.LocationResponseData;
+import be.ww.stock.api.query.LocationsResponseData;
 import be.ww.stock.query.repository.ApplianceField;
 import be.ww.stock.query.repository.LocationDocument;
 import be.ww.stock.query.repository.LocationRepository;
@@ -25,7 +27,9 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Objects;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 @Component
 @RequiredArgsConstructor
@@ -98,6 +102,22 @@ public class StockProjection {
     }
 
     @QueryHandler
+    public LocationsResponseData handle(
+            final FindLocationsByHouseHoldIdQuery query
+    ) {
+        return locationRepository.findByHouseHoldId(query.houseHoldId().id())
+                .stream()
+                .map(location -> new LocationsResponseData.Location(
+                        LocationId.of(location.getLocationId()),
+                        location.getName()
+                ))
+                .collect(collectingAndThen(
+                        toUnmodifiableSet(),
+                        LocationsResponseData::new
+                ));
+    }
+
+    @QueryHandler
     public LocationResponseData handle(
             final FindLocationByIdQuery query
     ) {
@@ -106,7 +126,7 @@ public class StockProjection {
                         .locationId(LocationId.of(location.getLocationId()))
                         .appliances(location.getAppliances().stream()
                                 .map(applianceField -> new LocationResponseData.Appliance(applianceField.type()))
-                                .collect(Collectors.toUnmodifiableSet())
+                                .collect(toUnmodifiableSet())
                         )
                         .build()
                 )
