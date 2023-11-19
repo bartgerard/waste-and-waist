@@ -16,7 +16,10 @@ export class HouseholdComponent implements OnInit {
   selectedLocation!: Location
   newLocation = ''
 
-  constructor(private primengConfig: PrimeNGConfig) {
+  constructor(
+    private primengConfig: PrimeNGConfig,
+    private backendService: BackendService
+  ) {
     this.locations = [
       {
         locationId: 1,
