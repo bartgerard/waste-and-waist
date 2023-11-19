@@ -1,3 +1,4 @@
 export interface Appliance {
-  type: string;
+  name: string
+  image: string
 }

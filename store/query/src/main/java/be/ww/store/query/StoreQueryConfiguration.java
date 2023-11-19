@@ -5,11 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 @Configuration
-@ComponentScan({
-        "be.ww.store.query"
+@ComponentScan(basePackages = {
+		"be.ww.store.query"
 })
 @EnableElasticsearchRepositories(basePackages = {
-        "be.ww.store.query.repository"
+		"be.ww.store.query.repository"
 })
 public class StoreQueryConfiguration {
 }

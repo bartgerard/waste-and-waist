@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 @Configuration
-@ComponentScan({
+@ComponentScan(basePackages = {
 		"be.ww.kitchen.command"
 })
 @EnableElasticsearchRepositories(basePackages = {
