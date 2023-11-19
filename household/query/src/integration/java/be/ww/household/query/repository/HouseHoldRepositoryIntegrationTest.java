@@ -27,8 +27,8 @@ class HouseHoldRepositoryIntegrationTest extends ElasticsearchContainerBaseTest 
             .members(Set.of(
                     MemberField.of("member-1", "Joe", LocalDate.parse("1988-01-01"), "user-1"),
                     MemberField.of("member-2", "Partner", LocalDate.parse("1988-01-01"), "user-2"),
-                    MemberField.of("member-1", "child-1", LocalDate.parse("1988-01-01"), null),
-                    MemberField.of("member-1", "child-2", LocalDate.parse("1988-01-01"), null)
+                    MemberField.of("member-3", "child-1", LocalDate.parse("1988-01-01"), null),
+                    MemberField.of("member-4", "child-2", LocalDate.parse("1988-01-01"), null)
             ))
             .build();
 

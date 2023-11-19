@@ -5,5 +5,4 @@ import be.ww.shared.type.LocationId;
 public record FindLocationByIdQuery(
 		LocationId locationId
 ) {
-
 }

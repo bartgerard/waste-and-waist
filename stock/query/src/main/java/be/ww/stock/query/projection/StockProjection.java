@@ -47,6 +47,7 @@ public class StockProjection {
         if (locationRepository.findByLocationId(event.locationId().id()).isEmpty()) {
             locationRepository.save(LocationDocument.builder()
                     .locationId(event.locationId().id())
+                    .houseHoldId(event.houseHoldId().id())
                     .name(event.name())
                     .build());
 
