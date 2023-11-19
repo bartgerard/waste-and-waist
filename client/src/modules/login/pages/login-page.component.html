@@ -1,0 +1,57 @@
+<div class="centered-form">
+  <div class="centered-form__image">
+    <img src="assets/logo.png" alt="Logo" />
+  </div>
+
+  <form [formGroup]="formGroup" (ngSubmit)="login()">
+    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+      <div class="ui-grid-row form-element">
+        <div class="ui-grid-col-2 label-spacing">Username</div>
+
+        <span class="p-input-icon-left">
+          <i class="pi pi-user"></i>
+          <input
+            type="text"
+            placeholder="Username"
+            pInputText
+            formControlName="username" />
+        </span>
+      </div>
+
+      <div class="ui-grid-row form-element">
+        <div class="ui-grid-col-2 label-spacing">Password</div>
+
+        <span class="p-input-icon-left">
+          <i class="pi pi-lock"></i>
+          <input
+            type="password"
+            placeholder="Password"
+            pInputText
+            formControlName="password" />
+        </span>
+
+        <div class="ui-grid-col-4">
+          <div
+            [hidden]="
+              formGroup.controls['password'].valid ||
+              !formGroup.controls['password'].dirty
+            "
+            class="alert alert-danger">
+            Password is required
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-grid-row form-element">
+        <div class="ui-grid-col-64s7w s"></div>
+
+        <div class="ui-grid-col-6 form-element">
+          <p-button
+            (onClick)="login()"
+            label="Login"
+            class="center-button p-button-lg"></p-button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

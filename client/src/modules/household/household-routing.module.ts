@@ -2,7 +2,7 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HouseholdComponent } from './components/overview/household.component';
+import { HouseholdComponent } from './components/household.component';
 
 const routes: Routes = [
   {
