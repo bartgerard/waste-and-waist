@@ -48,4 +48,9 @@ public record AmountRange(
             return String.format("%s..%s", range.min().value(), range.max().value());
         }
     }
+
+    @Override
+    public String toString() {
+        return serialize(this);
+    }
 }
