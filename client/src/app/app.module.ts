@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms'
 import { HouseholdModule } from '@/modules/household/household.module'
 import { LoginModule } from '@/modules/login/login.module'
 import { AppShellModule } from '@/modules/core/app-shell/app-shell.module'
+import { BASE_URL } from '@/modules/core/base-url.token'
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +24,12 @@ import { AppShellModule } from '@/modules/core/app-shell/app-shell.module'
     FormsModule,
     AppShellModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: BASE_URL,
+      useValue: 'http://localhost:8080',
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

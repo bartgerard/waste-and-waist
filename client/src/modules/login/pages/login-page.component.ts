@@ -1,3 +1,4 @@
+import { UserService } from '@/modules/user/services/user.service'
 import { Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
@@ -13,13 +14,23 @@ export class LoginPageComponent {
     password: new FormControl('', Validators.required),
   })
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private userService: UserService
+  ) {}
 
   login() {
-    this.router.navigate(['/households'])
-  }
+    if (
+      !this.formGroup.controls.username.value ||
+      !this.formGroup.controls.password.value
+    ) {
+      return
+    }
 
-  onSubmit() {
-    console.log('submit')
+    this.userService
+      .login(this.formGroup.value as { username: string; password: string })
+      .subscribe()
+
+    this.router.navigate(['/households'])
   }
 }
