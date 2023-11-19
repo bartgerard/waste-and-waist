@@ -6,7 +6,7 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 
 @Configuration
 @ComponentScan(
-		basePackages = "be.ww.stock.query.projection"
+		basePackages = {"be.ww.stock.query.projection"}
 )
 @EnableElasticsearchRepositories(
 		basePackages = "be.ww.stock.query.repository"

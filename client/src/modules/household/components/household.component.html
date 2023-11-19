@@ -55,8 +55,8 @@
       </tr>
       <tr>
         <p-selectButton
-          (ngModel)="(selectedAppliance)"
           [multiple]="true"
+          [ngModel]="selectedAppliances"
           [options]="appliances"
           optionLabel="type">
         </p-selectButton>

@@ -1,0 +1,279 @@
+###
+# https://fic.colruytgroup.com/productinfo/nl/cogo/3501748
+
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "ingredientId": "egg",
+  "productName": "Boni Selection Vrije uitloop eieren M 12 stuks",
+  "brand": "BONI",
+  "stores": [
+    "Colruyt"
+  ],
+  "unitQuantity": {
+    "amount": 12,
+    "unit": "PIECES"
+  },
+  "nutritionalFacts": {
+    "ENERGY": 125,
+    "PROTEIN": 13,
+    "CARBOHYDRATE": 0.5,
+    "SUGAR": 0.5,
+    "SATURATED_FAT": 2.3,
+    "FAT": 8,
+    "FIBRE": 0.5,
+    "SALT": 0.34
+  },
+  "allergens": [
+    "EGGS"
+  ]
+}
+
+###
+# https://fic.colruytgroup.com/productinfo/nl/algc/4383344
+
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "ingredientId": "egg",
+  "productName": "Boni 10 Witte scharreleieren A 550 g",
+  "brand": "BONI",
+  "stores": [
+    "Colruyt"
+  ],
+  "unitQuantity": {
+    "amount": 10,
+    "unit": "PIECES"
+  },
+  "nutritionalFacts": {
+    "ENERGY_KJ": 521,
+    "ENERGY_KCAL": 125,
+    "FAT": 8,
+    "SATURATED_FAT": 2.3,
+    "CARBOHYDRATE": 0.5,
+    "SUGAR": 0.5,
+    "FIBRE": 0.5,
+    "PROTEIN": 13,
+    "SALT": 0.34
+  },
+  "allergens": [
+    "EGGS"
+  ]
+}
+
+###
+# https://www.ah.nl/producten/product/wi442922/ah-witte-vrije-uitloopeieren-m
+
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "ingredientId": "egg",
+  "productName": "AH Witte vrije uitloopeieren M",
+  "brand": "AH",
+  "stores": [
+    "Albert Heijn"
+  ],
+  "unitQuantity": {
+    "amount": 6,
+    "unit": "PIECES",
+    "weight": "53-63g per egg"
+  },
+  "nutritionalFacts": {
+    "ENERGY_KJ": 544,
+    "ENERGY_KCAL": 131,
+    "FAT": 9.1,
+    "SATURATED_FAT": 3,
+    "UNSATURATED_FAT": 4.3,
+    "CARBOHYDRATE": 0.2,
+    "SUGAR": 0.2,
+    "FIBRE": 0,
+    "PROTEIN": 12,
+    "SALT": 0.38
+  },
+  "allergens": [
+    "EGGS"
+  ]
+}
+
+###
+# https://fic.colruytgroup.com/productinfo/nl/algc/29013
+
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "ingredientId": "banana",
+  "productName": "Boni Selection Bananen ± 1,2 kg",
+  "brand": "BONI SELECTION",
+  "stores": [
+    "Colruyt"
+  ],
+  "unitQuantity": {
+    "amount": 1.2,
+    "unit": "KG"
+  },
+  "nutritionalFacts": {
+    "per100g": {
+      "ENERGY_KJ": 366,
+      "ENERGY_KCAL": 86,
+      "FAT": 0,
+      "SATURATED_FAT": 0,
+      "CARBOHYDRATE": 19.6,
+      "SUGAR": 16.5,
+      "FIBRE": 1.7,
+      "PROTEIN": 1.1,
+      "SALT": 0
+    },
+    "perServing": {
+      "ServingSize": "130g",
+      "ENERGY_KJ": 476,
+      "ENERGY_KCAL": 112,
+      "FAT": 0,
+      "SATURATED_FAT": 0,
+      "CARBOHYDRATE": 25.5,
+      "SUGAR": 21.5,
+      "FIBRE": 2.2,
+      "PROTEIN": 1.4,
+      "SALT": 0
+    }
+  }
+}
+
+
+###
+# https://www.ah.nl/producten/product/wi197393/ah-bananen-tros
+
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "ingredientId": "banana",
+  "productName": "AH Bananen Tros",
+  "brand": "AH",
+  "stores": [
+    "Albert Heijn"
+  ],
+  "unitQuantity": {
+    "amount": 1,
+    "unit": "BUNCH"
+  },
+  "nutritionalFacts": {
+    "ENERGY_KJ": 385,
+    "ENERGY_KCAL": 91,
+    "FAT": 0.3,
+    "SATURATED_FAT": 0.1,
+    "UNSATURATED_FAT": 0.2,
+    "CARBOHYDRATE": 20,
+    "SUGAR": 16,
+    "FIBRE": 1.9,
+    "PROTEIN": 1.1,
+    "SALT": 0,
+    "VITAMIN_B6_MG": 0.29,
+    "POTASSIUM_MG": 374
+  },
+  "origin": "Costa Rica, Colombia, Ecuador, Belize",
+  "certifications": [
+    "Climate Neutral",
+    "Rainforest Alliance"
+  ],
+  "dietaryInformation": [
+    "Vegan",
+    "Gluten-Free",
+    "Lactose-Free"
+  ]
+}
+
+
+###
+# https://fic.colruytgroup.com/productinfo/nl/algc/3437436
+
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "ingredientId": "wrap",
+  "productName": "Boni Selection Wraps 6 stuks 370 g",
+  "brand": "BONI SELECTION",
+  "unitQuantity": {
+    "amount": 6,
+    "unit": "PIECES",
+    "weight": "370g"
+  },
+  "ingredients": "68% TARWEbloem, water, raapzaadolie, stabilisator (E422), dextrose, voedingszuur (E296), rijsmiddel (E500), zout, rijstextract, conserveermiddel (E282), aroma",
+  "storage": "Dry and away from heat. Refrigerate after opening and use within 3 days. Can be frozen.",
+  "nutritionalFacts": {
+    "per100g": {
+      "ENERGY_KJ": 1383,
+      "ENERGY_KCAL": 328,
+      "FAT": 7.3,
+      "SATURATED_FAT": 0.9,
+      "CARBOHYDRATE": 55,
+      "SUGAR": 2.6,
+      "FIBRE": 2.3,
+      "PROTEIN": 9.4,
+      "SALT": 0.9
+    },
+    "perServing": {
+      "ServingSize": "62g",
+      "ENERGY_KJ": 858,
+      "ENERGY_KCAL": 203,
+      "FAT": 4.5,
+      "SATURATED_FAT": 0.6,
+      "CARBOHYDRATE": 34,
+      "SUGAR": 1.6,
+      "FIBRE": 1.4,
+      "PROTEIN": 5.8,
+      "SALT": 0.56
+    }
+  }
+}
+
+###
+# https://www.delhaize.be/nl/shop/Zoute-kruidenierswaren/Wereldkeuken/Mexico/Pasta-rijst-en-andere-koolhydraten/6-Tortillas-Wraps/p/S2009061100101490000#productInfo
+
+POST http://localhost:8080/products
+Content-Type: application/json
+
+
+{
+  "ingredientId": "tortilla",
+  "productName": "Delhaize 6 Tortillas Wraps 370 g",
+  "brand": "Delhaize",
+  "unitQuantity": {
+    "amount": 6,
+    "unit": "PIECES",
+    "weight": "370g"
+  },
+  "ingredients": "TARWEBLOEM (66%), water, raapzaadolie, stabilisatoren (glycerol, carboxymethylcellulose, guargom), rijsmiddelen (natriumwaterstofcarbonaat, dinatriumdifosfaat), zout, voedingszuur (appelzuur), emulgator (mono- en diglyceriden van vetzuren), dextrose, conserveermiddelen (calciumpropionaat, kaliumsorbaat)",
+  "allergens": "Contains Gluten. Does not contain Mustard, Fish, Nuts, Sesame, Celery, Lupine, Molluscs, Eggs, Crustaceans, Milk, Soy, Peanuts, Sulfur dioxide or sulfites",
+  "nutritionalFacts": {
+    "per100g": {
+      "ENERGY_KJ": 1377,
+      "ENERGY_KCAL": 326,
+      "FAT": 7.3,
+      "SATURATED_FAT": 0.9,
+      "CARBOHYDRATE": 55,
+      "SUGAR": 2.6,
+      "FIBRE": 2.3,
+      "PROTEIN": 9.4,
+      "SALT": 0.9
+    },
+    "perServing": {
+      "ServingSize": "62g",
+      "ENERGY_KJ": 853,
+      "ENERGY_KCAL": 131,
+      "FAT": 2.9,
+      "SATURATED_FAT": 0.4,
+      "CARBOHYDRATE": 34,
+      "SUGAR": 1.6,
+      "FIBRE": 1.4,
+      "PROTEIN": 3.8,
+      "SALT": 0.36
+    }
+  },
+  "servingSize": "62g",
+  "servingsPerPackage": "8"
+}

@@ -29,7 +29,10 @@ public class Ingredient {
                 command.productId(),
                 command.productName(),
                 command.brand(),
-                command.stores()
+                command.stores(),
+                command.unitQuantity(),
+                command.nutritionalFacts(),
+                command.allergens()
         ));
     }
 

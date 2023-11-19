@@ -119,7 +119,7 @@ public class StockProjection {
     ) throws IllegalAccessException {
         LocationDocument product = locationRepository.findByProductId(event.productId().id())
                 .orElseThrow(() -> new IllegalAccessException("Can't reduce stock that is not present"));
-        Quantity leftOverQuantity = product.getQuantity().reduce(event.quantity());
+        Quantity leftOverQuantity = product.getQuantity().subtract(event.quantity());
         if (leftOverQuantity.amount().value().equals(BigDecimal.ZERO)) {
             locationRepository.delete(product);
         } else {

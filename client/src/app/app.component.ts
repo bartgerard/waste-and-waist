@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Component, OnInit } from '@angular/core'
 import { PrimeNGConfig } from 'primeng/api'
 

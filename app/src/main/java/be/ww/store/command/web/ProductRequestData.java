@@ -1,12 +1,20 @@
 package be.ww.store.command.web;
 
+import be.ww.shared.type.Amount;
+import be.ww.shared.type.ingredient.Allergen;
+import be.ww.shared.type.ingredient.NutritionalFact;
+import be.ww.shared.type.ingredient.Quantity;
+
+import java.util.Map;
 import java.util.Set;
 
 public record ProductRequestData(
         String ingredientId,
-        String productId,
         String productName,
         String brand,
-        Set<String> stores
+        Set<String> stores,
+        Quantity unitQuantity,
+        Map<NutritionalFact, Amount> nutritionalFacts,
+        Set<Allergen> allergens
 ) {
 }

@@ -2,14 +2,27 @@ package be.ww.shared.type.ingredient;
 
 import be.ww.shared.type.Amount;
 
+import java.util.Objects;
+
+import static org.apache.commons.lang3.Validate.isTrue;
+
 public record Quantity(
         Amount amount,
         Unit unit
 ) {
+    public Quantity subtract(
+            final Quantity subtrahend
+    ) {
+        isTrue(Objects.equals(unit(), subtrahend.unit()), "Not the same units, please convert before subtraction");
+
+        return new Quantity(amount().subtract(subtrahend.amount()), unit());
+    }
+
     public enum Unit {
         LITER("L"),
         GRAM("g"),
-        KILOGRAM("kg");
+        KILOGRAM("kg"),
+        PIECES("");
 
         private final String symbol;
 
@@ -19,19 +32,6 @@ public record Quantity(
 
         public String symbol() {
             return symbol;
-        }
-    }
-
-    public Quantity reduce(Quantity reduceWithQuantity) throws IllegalAccessException {
-        if (this.unit.equals(reduceWithQuantity.unit())) {
-            if (this.amount.value().compareTo(reduceWithQuantity.amount().value()) > 0) {
-                Amount subtractedAmount = new Amount(this.amount.value().subtract(reduceWithQuantity.amount.value()));
-                return new Quantity(subtractedAmount, this.unit());
-            } else {
-                throw new IllegalAccessException("To reduce quantity is bigger then starting quantity");
-            }
-        } else {
-            throw new IllegalAccessException("Not the same units, please convert before subtraction");
         }
     }
 
