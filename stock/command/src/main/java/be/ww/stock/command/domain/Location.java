@@ -1,5 +1,21 @@
 package be.ww.stock.command.domain;
 
+import static java.util.Collections.disjoint;
+import static org.apache.commons.lang3.Validate.isTrue;
+import static org.axonframework.modelling.command.AggregateLifecycle.apply;
+import static org.axonframework.modelling.command.AggregateLifecycle.markDeleted;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.axonframework.commandhandling.CommandHandler;
+import org.axonframework.eventhandling.EventHandler;
+import org.axonframework.eventsourcing.EventSourcingHandler;
+import org.axonframework.modelling.command.AggregateCreationPolicy;
+import org.axonframework.modelling.command.AggregateIdentifier;
+import org.axonframework.modelling.command.CreationPolicy;
+import org.axonframework.spring.stereotype.Aggregate;
+
 import be.ww.shared.type.LocationId;
 import be.ww.shared.type.ingredient.Quantity;
 import be.ww.stock.api.command.AddAppliancesCommand;
@@ -18,31 +34,15 @@ import be.ww.stock.api.event.ProvisionDisposeEvent;
 import be.ww.stock.api.event.ProvisionsConsumedEvent;
 import be.ww.stock.api.event.ProvisionsStoredEvent;
 import be.ww.stock.api.event.StorageFacilitiesAddedEvent;
-import be.ww.stock.api.type.Appliance;
 import be.ww.stock.api.type.StorageFacility;
 import be.ww.stock.command.repository.StockHouseHoldRepository;
 import be.ww.stock.command.repository.StockProductRepository;
 import lombok.NoArgsConstructor;
-import org.axonframework.commandhandling.CommandHandler;
-import org.axonframework.eventhandling.EventHandler;
-import org.axonframework.eventsourcing.EventSourcingHandler;
-import org.axonframework.modelling.command.AggregateCreationPolicy;
-import org.axonframework.modelling.command.AggregateIdentifier;
-import org.axonframework.modelling.command.CreationPolicy;
-import org.axonframework.spring.stereotype.Aggregate;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import static java.util.Collections.disjoint;
-import static org.apache.commons.lang3.Validate.isTrue;
-import static org.axonframework.modelling.command.AggregateLifecycle.apply;
-import static org.axonframework.modelling.command.AggregateLifecycle.markDeleted;
 
 @Aggregate
 @NoArgsConstructor
 public class Location {
-    private final Set<Appliance> appliances = new HashSet<>();
+    private final Set<String> appliances = new HashSet<>();
     private final Set<StorageFacility> storageFacilities = new HashSet<>();
     @AggregateIdentifier
     private LocationId locationId;
@@ -67,7 +67,6 @@ public class Location {
     @CommandHandler
     public void handle(final AddAppliancesCommand command) {
         isTrue(disjoint(command.appliances(), this.appliances), "appliance already contained");
-
         apply(new AppliancesAddedEvent(
                 command.locationId(),
                 command.appliances()
@@ -175,7 +174,6 @@ public class Location {
 
     @EventSourcingHandler
     public void on(final ProvisionsStoredEvent event) {
-        this.locationId = event.locationId();
         this.quantity = event.quantity();
     }
 }
