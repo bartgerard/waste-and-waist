@@ -1,5 +1,17 @@
 package be.ww.stock.query.projection;
 
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toUnmodifiableSet;
+
+import java.math.BigDecimal;
+import java.util.Objects;
+
+import org.axonframework.config.ProcessingGroup;
+import org.axonframework.eventhandling.EventHandler;
+import org.axonframework.queryhandling.QueryHandler;
+import org.axonframework.queryhandling.QueryUpdateEmitter;
+import org.springframework.stereotype.Component;
+
 import be.ww.shared.type.LocationId;
 import be.ww.shared.type.ingredient.Quantity;
 import be.ww.stock.api.event.AppliancesAddedEvent;
@@ -19,17 +31,6 @@ import be.ww.stock.query.repository.LocationRepository;
 import be.ww.stock.query.repository.StorageFacilityField;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.axonframework.config.ProcessingGroup;
-import org.axonframework.eventhandling.EventHandler;
-import org.axonframework.queryhandling.QueryHandler;
-import org.axonframework.queryhandling.QueryUpdateEmitter;
-import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
-import java.util.Objects;
-
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toUnmodifiableSet;
 
 @Component
 @RequiredArgsConstructor
@@ -47,6 +48,7 @@ public class StockProjection {
         if (locationRepository.findByLocationId(event.locationId().id()).isEmpty()) {
             locationRepository.save(LocationDocument.builder()
                     .locationId(event.locationId().id())
+                    .houseHoldId(event.houseHoldId().id())
                     .name(event.name())
                     .build());
 
@@ -63,7 +65,7 @@ public class StockProjection {
                 .map(locationDocument -> locationDocument.toBuilder()
                         .locationId(event.locationId().id())
                         .appliances(event.appliances().stream()
-                                .map(appliance -> new ApplianceField(appliance.type())
+                                .map(ApplianceField::new
                                 ).toList()
                         )
                         .build()

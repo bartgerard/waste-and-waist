@@ -30,13 +30,13 @@ import be.ww.stock.api.command.RemoveAppliancesCommand;
 import be.ww.stock.api.command.RemoveLocationCommand;
 import be.ww.stock.api.command.StoreProvisionsCommand;
 import be.ww.stock.api.query.FindLocationByIdQuery;
+import be.ww.stock.api.query.LocationResponseData;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 @RestController
 @RequestMapping("locations")
-@CrossOrigin
 @RequiredArgsConstructor
 public class LocationRestController {
 
@@ -59,11 +59,11 @@ public class LocationRestController {
 
 	@PostMapping("{locationId}/addAppliances")
 	public Mono<Object> addAppliances(
-			@PathVariable final LocationId locationId,
+			@PathVariable final String locationId,
 			@RequestBody final LocationAppliancesRequestData request
 	) {
 		return reactorCommandGateway.send(new AddAppliancesCommand(
-						locationId,
+						LocationId.of(locationId),
 						request.appliances()
 				))
 				.subscribeOn(Schedulers.parallel());
@@ -71,11 +71,11 @@ public class LocationRestController {
 
 	@PostMapping("{locationId}/addFacilities")
 	public Mono<Object> addStorageFacilitiesCommand(
-			@PathVariable final LocationId locationId,
+			@PathVariable final String locationId,
 			@RequestBody final LocationFacilitiesRequestData request
 	) {
 		return reactorCommandGateway.send(new AddStorageFacilitiesCommand(
-						locationId,
+						LocationId.of(locationId),
 						request.storageFacilities()
 				))
 				.subscribeOn(Schedulers.parallel());
@@ -83,15 +83,15 @@ public class LocationRestController {
 
 	@PostMapping("{locationId}/products/{productId}/provisions/{provisionId}")
 	public Mono<Object> consumeProvisions(
-			@PathVariable final LocationId locationId,
-			@PathVariable final ProductId productId,
-			@PathVariable final ProvisionId provisionId,
+			@PathVariable final String locationId,
+			@PathVariable final String productId,
+			@PathVariable final String provisionId,
 			@RequestBody final LocationProvisionsRequestData request
 	) {
 		return reactorCommandGateway.send(new ConsumeProvisionsCommand(
-						locationId,
-						productId,
-						provisionId,
+						LocationId.of(locationId),
+						ProductId.of(productId),
+						ProvisionId.of(provisionId),
 						new Quantity(Amount.of(request.amount()), Quantity.Unit.valueOf(request.unit()))
 				))
 				.subscribeOn(Schedulers.parallel());
@@ -99,53 +99,53 @@ public class LocationRestController {
 
 	@DeleteMapping("{locationId}/products/{productId}/provisions/{provisionId}")
 	public void disposeProvisions(
-			@PathVariable final LocationId locationId,
-			@PathVariable final ProductId productId,
-			@PathVariable final ProvisionId provisionId
+			@PathVariable final String locationId,
+			@PathVariable final String productId,
+			@PathVariable final String provisionId
 	) {
 		reactorCommandGateway.send(new DisposeProvisionsCommand(
-						locationId,
-						productId,
-						provisionId
+						LocationId.of(locationId),
+						ProductId.of(productId),
+						ProvisionId.of(provisionId)
 				))
-				.block();
+				.subscribeOn(Schedulers.parallel());
 	}
 
 	@DeleteMapping("{locationId}/deleteAppliances")
 	public void removeAppliances(
-			@PathVariable final LocationId locationId,
+			@PathVariable final String locationId,
 			@RequestBody final LocationAppliancesRequestData request
 	) {
 		reactorCommandGateway.send(new RemoveAppliancesCommand(
-						locationId,
+						LocationId.of(locationId),
 						request.appliances()
 				))
-				.block();
+				.subscribeOn(Schedulers.parallel());
 	}
 
 	@DeleteMapping("{locationId}")
 	public void removeLocation(
-			@PathVariable final LocationId locationId
+			@PathVariable final String locationId
 	) {
 		reactorCommandGateway.send(new RemoveLocationCommand(
-						locationId
+						LocationId.of(locationId)
 				))
-				.block();
+				.subscribeOn(Schedulers.parallel());
 	}
 
 	@PostMapping("{locationId}/products/{productId}/ingredients/{ingredientId}/provisions/{provisionId}")
 	public Mono<Object> consumeProvisions(
-			@PathVariable final LocationId locationId,
-			@PathVariable final ProductId productId,
-			@PathVariable final ProvisionId provisionId,
-			@PathVariable final IngredientId ingredientId,
+			@PathVariable final String locationId,
+			@PathVariable final String productId,
+			@PathVariable final String provisionId,
+			@PathVariable final String ingredientId,
 			@RequestBody final LocationStoreProvisionRequestData request
 	) {
 		return reactorCommandGateway.send(new StoreProvisionsCommand(
-						locationId,
-						productId,
-						provisionId,
-						ingredientId,
+						LocationId.of(locationId),
+						ProductId.of(productId),
+						ProvisionId.of(provisionId),
+						IngredientId.of(ingredientId),
 						new Quantity(Amount.of(request.amount()), Quantity.Unit.valueOf(request.unit())),
 						new BestBeforeDay(request.bestBeforeDay()),
 						new UseByDay(request.useByDay())
@@ -155,12 +155,12 @@ public class LocationRestController {
 	}
 
 	@GetMapping("{locationId}")
-	public Mono<LocationRequestData> findByLocationId(
+	public Mono<LocationResponseData> findByLocationId(
 			@PathVariable final String locationId
 	) {
 		return reactorQueryGateway.query(
 				new FindLocationByIdQuery(LocationId.of(locationId)),
-				ResponseTypes.instanceOf(LocationRequestData.class)
+				ResponseTypes.instanceOf(LocationResponseData.class)
 		);
 	}
 

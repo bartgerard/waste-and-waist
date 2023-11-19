@@ -11,18 +11,20 @@ import be.ww.household.query.repository.HouseHoldDocument;
 import be.ww.household.query.repository.HouseHoldRepository;
 import be.ww.household.query.repository.MemberField;
 import be.ww.shared.type.HouseHoldId;
+import be.ww.shared.type.MemberId;
 import be.ww.shared.type.UserId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
-import org.axonframework.messaging.unitofwork.UnitOfWork;
 import org.axonframework.queryhandling.QueryHandler;
 import org.axonframework.queryhandling.QueryUpdateEmitter;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.Objects;
 
+import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toUnmodifiableSet;
 
@@ -39,11 +41,12 @@ public class HouseHoldProjection {
             final HouseHoldDocument houseHold
     ) {
         return new HouseHoldResponseData.HouseHold(
-                houseHold.getHouseHoldId(),
+                HouseHoldId.of(houseHold.getHouseHoldId()),
+                houseHold.getName(),
                 houseHold.getMembers()
                         .stream()
                         .map(member -> new HouseHoldResponseData.Member(
-                                member.memberId(),
+                                MemberId.of(member.memberId()),
                                 member.name(),
                                 member.birthDate()
                         ))
@@ -53,13 +56,13 @@ public class HouseHoldProjection {
 
     @EventHandler
     public void on(
-            final HouseHoldStartedEvent event,
-            final UnitOfWork<?> unitOfWork
+            final HouseHoldStartedEvent event
     ) {
         log.info("Handle HouseHoldStartedEvent [{}]", event);
         houseHoldRepository.save(HouseHoldDocument.builder()
                 .houseHoldId(event.houseHoldId().id())
-                .houseHoldName(event.houseHoldName())
+                .name(event.houseHoldName())
+                .members(emptySet())
                 .build()
         );
 
@@ -72,15 +75,23 @@ public class HouseHoldProjection {
     ) {
         log.info("Handle MemberAdded [{}]", event);
         houseHoldRepository.findByHouseHoldIdIs(event.houseHoldId().id())
-                .map(houseHoldDocument -> houseHoldDocument.toBuilder()
-                        .member(MemberField.of(
-                                event.memberId().id(),
-                                event.memberName(),
-                                event.birthDate(),
-                                null
-                        ))
-                        .build()
-                )
+                .map(houseHoldDocument -> {
+                    final HashSet<MemberField> members = new HashSet<>(houseHoldDocument.getMembers());
+                    final MemberField alteredMember = members.stream()
+                            .filter(member -> Objects.equals(member.memberId(), event.memberId().id()))
+                            .findFirst()
+                            .orElseGet(() -> MemberField.of(
+                                    event.memberId().id(),
+                                    event.memberName(),
+                                    event.birthDate(),
+                                    null
+                            ));
+                    members.add(alteredMember);
+
+                    return houseHoldDocument.toBuilder()
+                            .members(members)
+                            .build();
+                })
                 .ifPresent(houseHoldRepository::save);
 
         emitUpdateForHouseHoldId(event.houseHoldId());
@@ -110,18 +121,21 @@ public class HouseHoldProjection {
             final HouseHoldJoinedEvent event
     ) {
         log.info("Handle HouseHoldJoinedEvent [{}]", event);
-        /*
         houseHoldRepository.findByHouseHoldIdIs(event.houseHoldId().id())
-                .map(houseHoldDocument -> houseHoldDocument.toBuilder()
-                        .member(MemberField.of(
-                                event.memberName(),
-                                event.userId()
-                        ))
-                        .build()
-                )
+                .map(houseHoldDocument -> {
+                    System.out.println(houseHoldDocument);
+                    return houseHoldDocument.toBuilder()
+                            .members(houseHoldDocument.getMembers()
+                                    .stream()
+                                    .map(member -> Objects.equals(member.memberId(), event.memberId().id())
+                                            ? MemberField.of(member.memberId(), member.name(), member.birthDate(), event.userId().id())
+                                            : member
+                                    )
+                                    .collect(toUnmodifiableSet())
+                            )
+                            .build();
+                })
                 .ifPresent(houseHoldRepository::save);
-
-         */
 
         emitUpdateForHouseHoldId(event.houseHoldId());
         emitUpdateForUser(event.userId());

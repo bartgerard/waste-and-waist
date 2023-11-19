@@ -32,7 +32,6 @@ import java.time.Duration;
 
 @RestController
 @RequestMapping(path = "/house-holds")
-@CrossOrigin
 @RequiredArgsConstructor
 public class HouseHoldRestController {
 
