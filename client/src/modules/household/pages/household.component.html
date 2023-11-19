@@ -1,0 +1,83 @@
+<h1>Your households</h1>
+
+<ng-container *ngIf="households$ | async as households; else loading">
+  <div *ngIf="households.houseHolds.length; else emptyHouseholds">
+    <h2>Pick a household to start</h2>
+
+    <form [formGroup]="householdFormGroup">
+      <p-dropdown
+        [options]="households.houseHolds"
+        formControlName="selectedHouseHold"
+        optionLabel="name"
+        placeholder="Selected household"></p-dropdown>
+    </form>
+
+    <app-selected-house-hold
+      *ngIf="!!householdFormGroup.controls.selectedHouseHold.value"
+      [houseHold]="householdFormGroup.controls.selectedHouseHold.value"
+      class="mt-6">
+    </app-selected-house-hold>
+  </div>
+
+  <ng-template #emptyHouseholds>
+    <p>There seems to be no household...</p>
+
+    <h1>Add one below!</h1>
+
+    <form (ngSubmit)="addHousehold()" [formGroup]="formGroup">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+        <div class="ui-grid-row form-element">
+          <div class="ui-grid-col-2 label-spacing">Membername</div>
+
+          <span class="p-input-icon-left">
+            <i class="pi pi-user"></i>
+            <input
+              formControlName="memberName"
+              pInputText
+              placeholder="Membername"
+              type="text" />
+          </span>
+        </div>
+
+        <div class="ui-grid-row form-element">
+          <div class="ui-grid-col-2 label-spacing">Household name</div>
+
+          <span class="p-input-icon-left">
+            <i class="pi pi-home"></i>
+            <input
+              formControlName="houseHoldName"
+              pInputText
+              placeholder="Household name"
+              type="text" />
+          </span>
+        </div>
+
+        <div class="ui-grid-row form-element">
+          <div class="ui-grid-col-2 label-spacing">Birthdate</div>
+
+          <span class="p-input-icon-left">
+            <p-calendar
+              [showIcon]="true"
+              formControlName="birthDate"
+              placeholder="Birthdate"></p-calendar>
+          </span>
+        </div>
+      </div>
+
+      <p-button
+        [disabled]="formGroup.invalid"
+        [rounded]="true"
+        icon="pi pi-plus"
+        label="Add household"
+        type="submit"></p-button>
+    </form>
+  </ng-template>
+</ng-container>
+
+<ng-template #loading>
+  <p-progressSpinner
+    animationDuration=".5s"
+    fill="var(--surface-ground)"
+    strokeWidth="8"
+    styleClass="w-4rem h-4rem"></p-progressSpinner>
+</ng-template>
