@@ -36,7 +36,7 @@ import reactor.core.scheduler.Schedulers;
 
 @RestController
 @RequestMapping("locations")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class LocationRestController {
 

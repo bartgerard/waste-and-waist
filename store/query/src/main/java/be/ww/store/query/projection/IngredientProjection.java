@@ -61,6 +61,7 @@ public class IngredientProjection {
                         .allergens(AllergenField.from(event.allergens()))
                         .build()
                 )
+                //.nutritionalFacts()
                 .build();
 
         ingredientRepository.save(newDocument);

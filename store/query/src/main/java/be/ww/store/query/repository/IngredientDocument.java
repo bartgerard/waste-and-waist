@@ -1,5 +1,6 @@
 package be.ww.store.query.repository;
 
+import be.ww.shared.type.ingredient.AmountRange;
 import be.ww.shared.type.ingredient.NutritionalFact;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -32,5 +33,5 @@ public class IngredientDocument {
     @Singular
     @Field(name = "ranged_nutritional_facts", type = FieldType.Flattened)
     @ValueConverter(AmountRangeConverter.class)
-    Map<NutritionalFact, AmountRangeConverter> nutritionalFacts;
+    Map<NutritionalFact, AmountRange> nutritionalFacts;
 }

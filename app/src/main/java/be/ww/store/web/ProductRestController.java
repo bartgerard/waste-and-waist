@@ -18,7 +18,7 @@ import static java.util.Objects.requireNonNullElseGet;
 
 @RestController
 @RequestMapping(path = "/products")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class ProductRestController {
 
