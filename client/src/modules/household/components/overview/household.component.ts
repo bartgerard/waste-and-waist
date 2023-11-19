@@ -73,13 +73,15 @@ export class HouseholdComponent implements OnInit {
     ]
   }
   ngOnInit(): void {
-    this.backendService.getData().subscribe(
-      data => {
-        this.responseData = data
-        // Process the received data
+    const userId = 'testuser@test.com'
+    const password = '123456'
+
+    this.backendService.performSequence(userId, password).subscribe(
+      response => {
+        console.log('Sequence completed successfully:', response)
       },
       error => {
-        console.error('Error fetching data:', error)
+        console.error('Sequence failed:', error)
       }
     )
   }
