@@ -7,6 +7,7 @@ import { SelectButtonModule } from 'primeng/selectbutton'
 import { InputTextModule } from 'primeng/inputtext'
 import { FormsModule } from '@angular/forms'
 import { CardModule } from 'primeng/card'
+import { HttpClientModule } from '@angular/common/http'
 import { HouseholdComponent } from '@/modules/household/components/household.component'
 
 @NgModule({
@@ -19,6 +20,7 @@ import { HouseholdComponent } from '@/modules/household/components/household.com
     InputTextModule,
     FormsModule,
     CardModule,
+    HttpClientModule,
   ],
   declarations: [HouseholdComponent],
   providers: [],

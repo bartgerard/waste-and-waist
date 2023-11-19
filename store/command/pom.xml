@@ -21,11 +21,6 @@
             <artifactId>store-api</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>be.ww</groupId>
-            <artifactId>store-adapter</artifactId>
-        </dependency>
-
         <!-- 3rd party -->
 
         <!-- spring -->

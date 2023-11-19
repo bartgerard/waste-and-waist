@@ -16,7 +16,6 @@
         <module>api</module>
         <module>command</module>
         <module>query</module>
-        <module>adapter</module>
     </modules>
 
 </project>

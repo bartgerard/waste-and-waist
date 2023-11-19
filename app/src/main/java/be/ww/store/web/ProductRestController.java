@@ -1,4 +1,4 @@
-package be.ww.store.command.web;
+package be.ww.store.web;
 
 import be.ww.shared.type.ProductId;
 import be.ww.shared.type.ingredient.IngredientId;
@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
+
+import java.util.Collections;
+
+import static java.util.Objects.requireNonNullElseGet;
 
 @RestController
 @RequestMapping(path = "/products")
@@ -29,10 +33,10 @@ public class ProductRestController {
                 ProductId.create(),
                 productRequestData.productName(),
                 productRequestData.brand(),
-                productRequestData.stores(),
+                requireNonNullElseGet(productRequestData.stores(), Collections::emptySet),
                 productRequestData.unitQuantity(),
-                productRequestData.nutritionalFacts(),
-                productRequestData.allergens()
+                requireNonNullElseGet(productRequestData.nutritionalFacts(), Collections::emptyMap),
+                requireNonNullElseGet(productRequestData.allergens(), Collections::emptySet)
         ));
     }
 

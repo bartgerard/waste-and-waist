@@ -8,10 +8,12 @@ import be.ww.store.api.query.FindIngredientByIdQuery;
 import be.ww.store.api.query.Ingredient;
 import be.ww.store.api.query.IngredientResponseData;
 import be.ww.store.api.query.Product;
+import be.ww.store.query.repository.AllergenField;
 import be.ww.store.query.repository.IngredientDocument;
 import be.ww.store.query.repository.IngredientRepository;
 import be.ww.store.query.repository.ProductField;
 import be.ww.store.query.repository.QuantityField;
+import be.ww.store.query.repository.StoreField;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.config.ProcessingGroup;
@@ -41,12 +43,12 @@ public class IngredientProjection {
                         .build()
                 );
 
-        ingredientRepository.save(ingredientDocument.toBuilder()
+        final IngredientDocument newDocument = ingredientDocument.toBuilder()
                 .product(ProductField.builder()
                         .productId(event.productId().id())
                         .name(event.productName())
                         .brand(event.brand())
-                        .stores(event.stores())
+                        .stores(StoreField.from(event.stores()))
                         .unitQuantity(QuantityField.from(event.unitQuantity()))
                         .nutritionalFacts(event.nutritionalFacts()
                                 .entrySet()
@@ -56,11 +58,12 @@ public class IngredientProjection {
                                         fact -> fact.getValue().value()
                                 ))
                         )
-                        .allergens(event.allergens())
+                        .allergens(AllergenField.from(event.allergens()))
                         .build()
                 )
-                .build()
-        );
+                .build();
+
+        ingredientRepository.save(newDocument);
     }
 
     @QueryHandler
@@ -76,7 +79,7 @@ public class IngredientProjection {
                                         .productId(ProductId.of(product.productId()))
                                         .productName(product.name())
                                         .brand(product.brand())
-                                        .stores(product.stores())
+                                        .stores(StoreField.toStores(product.stores()))
                                         .unitQuantity(product.unitQuantity().toQuantity())
                                         .nutritionalFacts(product.nutritionalFacts()
                                                 .entrySet()
@@ -86,7 +89,7 @@ public class IngredientProjection {
                                                         fact -> Amount.of(fact.getValue())
                                                 ))
                                         )
-                                        .allergens(product.allergens())
+                                        .allergens(AllergenField.toAllergens(product.allergens()))
                                         .build()
                                 )
                                 .toList()

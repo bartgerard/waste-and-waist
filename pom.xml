@@ -87,11 +87,6 @@
             </dependency>
             <dependency>
                 <groupId>be.ww</groupId>
-                <artifactId>household-adapter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>be.ww</groupId>
                 <artifactId>household-command</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -104,11 +99,6 @@
             <dependency>
                 <groupId>be.ww</groupId>
                 <artifactId>stock-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>be.ww</groupId>
-                <artifactId>stock-adapter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -129,11 +119,6 @@
             </dependency>
             <dependency>
                 <groupId>be.ww</groupId>
-                <artifactId>store-adapter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>be.ww</groupId>
                 <artifactId>store-command</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -150,11 +135,6 @@
             </dependency>
             <dependency>
                 <groupId>be.ww</groupId>
-                <artifactId>planner-adapter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>be.ww</groupId>
                 <artifactId>planner-command</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -167,11 +147,6 @@
             <dependency>
                 <groupId>be.ww</groupId>
                 <artifactId>kitchen-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>be.ww</groupId>
-                <artifactId>kitchen-adapter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

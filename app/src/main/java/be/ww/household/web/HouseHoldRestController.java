@@ -4,9 +4,13 @@ import be.ww.household.api.command.AddMemberCommand;
 import be.ww.household.api.command.RemoveMemberCommand;
 import be.ww.household.api.command.StartHouseHoldCommand;
 import be.ww.household.api.query.FindHouseHoldByIdQuery;
+import be.ww.household.api.query.FindHouseHoldsForUserQuery;
 import be.ww.household.api.query.HouseHoldResponseData;
 import be.ww.shared.type.HouseHoldId;
 import be.ww.shared.type.MemberId;
+import be.ww.shared.type.UserId;
+import be.ww.stock.api.query.FindLocationsByHouseHoldIdQuery;
+import be.ww.stock.api.query.LocationsResponseData;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.extensions.reactor.commandhandling.gateway.ReactorCommandGateway;
 import org.axonframework.extensions.reactor.queryhandling.gateway.ReactorQueryGateway;
@@ -83,6 +87,26 @@ public class HouseHoldRestController {
         return reactorQueryGateway.query(
                 new FindHouseHoldByIdQuery(HouseHoldId.of(houseHoldId)),
                 ResponseTypes.instanceOf(HouseHoldResponseData.class)
+        );
+    }
+
+    @GetMapping("by-user/{userId}")
+    public Mono<HouseHoldResponseData> findByUserId(
+            @PathVariable final String userId
+    ) {
+        return reactorQueryGateway.query(
+                new FindHouseHoldsForUserQuery(UserId.of(userId)),
+                ResponseTypes.instanceOf(HouseHoldResponseData.class)
+        );
+    }
+
+    @GetMapping("{houseHoldId}/locations")
+    public Mono<LocationsResponseData> findLocationsByHouseHoldId(
+            @PathVariable final String houseHoldId
+    ) {
+        return reactorQueryGateway.query(
+                new FindLocationsByHouseHoldIdQuery(HouseHoldId.of(houseHoldId)),
+                ResponseTypes.instanceOf(LocationsResponseData.class)
         );
     }
 

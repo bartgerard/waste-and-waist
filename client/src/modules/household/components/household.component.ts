@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { PrimeNGConfig } from 'primeng/api'
-import { Location } from './Location'
 import { Appliance } from './Appliance'
+import { Location } from './Location'
+import { BackendService } from '@/modules/household/services/backend.service'
 
 @Component({
   selector: 'app-household',
@@ -15,8 +16,12 @@ export class HouseholdComponent implements OnInit {
   selectedAppliances: string[] = []
   selectedLocation!: Location
   newLocation = ''
+  responseData: any
 
-  constructor(private primengConfig: PrimeNGConfig) {
+  constructor(
+    private primengConfig: PrimeNGConfig,
+    private backendService: BackendService
+  ) {
     this.locations = [
       {
         locationId: 1,
@@ -68,7 +73,15 @@ export class HouseholdComponent implements OnInit {
     ]
   }
   ngOnInit(): void {
-    console.log('ngOnInit')
+    this.backendService.getData().subscribe(
+      (data: any) => {
+        this.responseData = data
+        // Process the received data
+      },
+      (error: any) => {
+        console.error('Error fetching data:', error)
+      }
+    )
   }
 
   add() {
