@@ -30,8 +30,8 @@ public class IngredientDocument {
     @Field(name = "products", type = FieldType.Nested)
     Set<ProductField> products;
 
-    @Singular
-    @Field(name = "nutritional_fact_ranges", type = FieldType.Flattened)
-    @ValueConverter(AmountRangeConverter.class)
-    Map<NutritionalFact, AmountRange> nutritionalFactRanges;
+    //@Singular
+    //@Field(name = "nutritional_fact_ranges", type = FieldType.Flattened)
+    //@ValueConverter(AmountRangeConverter.class)
+    //Map<NutritionalFact, AmountRange> nutritionalFactRanges;
 }
