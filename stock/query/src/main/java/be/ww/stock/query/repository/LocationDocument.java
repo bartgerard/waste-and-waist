@@ -1,20 +1,18 @@
 package be.ww.stock.query.repository;
 
-import be.ww.shared.elasticsearch.util.DateConverter;
-import be.ww.shared.type.ingredient.Quantity;
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
+import be.ww.stock.api.command.StoreProvisionsCommand;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Singular;
 import lombok.Value;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.DateFormat;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
-import org.springframework.data.elasticsearch.annotations.ValueConverter;
-
-import java.time.LocalDate;
-import java.util.Set;
 
 @Document(indexName = "ww-stock-query-location")
 @Value
@@ -30,7 +28,8 @@ public class LocationDocument {
 
     @Field(name = "house_hold_id", type = FieldType.Keyword, norms = false)
     String houseHoldId;
-
+    @Field(name = "provision_id", type = FieldType.Keyword, norms = false)
+    String provisionId;
     @Field(name = "name", type = FieldType.Keyword, norms = false)
     String name;
 
@@ -45,19 +44,8 @@ public class LocationDocument {
     @Field(name = "product_id", type = FieldType.Keyword, norms = false)
     String productId;
 
-    @Field(name = "provision_id", type = FieldType.Keyword, norms = false)
-    String provisionId;
+    @Singular
+    @Field(name = "provisions", type = FieldType.Nested)
+    List<StoreProvisionsCommand.Product> provisions;
 
-    @Field(name = "ingredient_id", type = FieldType.Keyword, norms = false)
-    String ingredientId;
-
-    Quantity quantity;
-
-    @Field(name = "best_before", type = FieldType.Date, format = DateFormat.date)
-    @ValueConverter(DateConverter.class)
-    LocalDate bestBefore;
-
-    @Field(name = "used_by", type = FieldType.Date, format = DateFormat.date)
-    @ValueConverter(DateConverter.class)
-    LocalDate usedBy;
 }

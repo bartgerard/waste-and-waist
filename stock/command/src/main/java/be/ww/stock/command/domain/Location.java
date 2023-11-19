@@ -6,6 +6,7 @@ import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 import static org.axonframework.modelling.command.AggregateLifecycle.markDeleted;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.axonframework.commandhandling.CommandHandler;
@@ -17,11 +18,9 @@ import org.axonframework.modelling.command.CreationPolicy;
 import org.axonframework.spring.stereotype.Aggregate;
 
 import be.ww.shared.type.LocationId;
-import be.ww.shared.type.ingredient.Quantity;
 import be.ww.stock.api.command.AddAppliancesCommand;
 import be.ww.stock.api.command.AddLocationCommand;
 import be.ww.stock.api.command.AddStorageFacilitiesCommand;
-import be.ww.stock.api.command.ConsumeProvisionsCommand;
 import be.ww.stock.api.command.DisposeProvisionsCommand;
 import be.ww.stock.api.command.RemoveAppliancesCommand;
 import be.ww.stock.api.command.RemoveLocationCommand;
@@ -31,7 +30,6 @@ import be.ww.stock.api.event.AppliancesRemovedEvent;
 import be.ww.stock.api.event.LocationAddedEvent;
 import be.ww.stock.api.event.LocationRemovedEvent;
 import be.ww.stock.api.event.ProvisionDisposeEvent;
-import be.ww.stock.api.event.ProvisionsConsumedEvent;
 import be.ww.stock.api.event.ProvisionsStoredEvent;
 import be.ww.stock.api.event.StorageFacilitiesAddedEvent;
 import be.ww.stock.api.type.StorageFacility;
@@ -46,7 +44,7 @@ public class Location {
     private final Set<StorageFacility> storageFacilities = new HashSet<>();
     @AggregateIdentifier
     private LocationId locationId;
-    private Quantity quantity;
+    private List<StoreProvisionsCommand.Product> provisions;
 
     @CommandHandler
     @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
@@ -82,16 +80,7 @@ public class Location {
         ));
     }
 
-    @CommandHandler
-    public void handle(final ConsumeProvisionsCommand command) {
-        isTrue(this.quantity.amount().value().compareTo(command.quantity().amount().value()) > 0);
-        apply(new ProvisionsConsumedEvent(
-                command.locationId(),
-                command.productId(),
-                command.provisionId(),
-                command.quantity()
-        ));
-    }
+
 
     @CommandHandler
     public void handle(
@@ -126,12 +115,7 @@ public class Location {
     public void handle(final StoreProvisionsCommand command) {
         apply(new ProvisionsStoredEvent(
                 command.locationId(),
-                command.productId(),
-                command.provisionId(),
-                command.ingredientId(),
-                command.quantity(),
-                command.bestBeforeDay(),
-                command.useByDay()
+                command.provisions()
         ));
     }
 
@@ -152,10 +136,6 @@ public class Location {
         this.storageFacilities.addAll(event.storageFacilities());
     }
 
-    @EventSourcingHandler
-    public void on(final ProvisionsConsumedEvent event) throws IllegalAccessException {
-        this.quantity.subtract(event.quantity());
-    }
 
     @EventSourcingHandler
     public void on(final ProvisionDisposeEvent event) {
@@ -174,6 +154,6 @@ public class Location {
 
     @EventSourcingHandler
     public void on(final ProvisionsStoredEvent event) {
-        this.quantity = event.quantity();
+        this.provisions = event.provisions();
     }
 }

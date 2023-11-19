@@ -1,9 +1,11 @@
 package be.ww.stock.web;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.axonframework.extensions.reactor.commandhandling.gateway.ReactorCommandGateway;
 import org.axonframework.extensions.reactor.queryhandling.gateway.ReactorQueryGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +20,6 @@ import be.ww.shared.type.LocationId;
 import be.ww.shared.type.ProductId;
 import be.ww.shared.type.ProvisionId;
 import be.ww.shared.type.ingredient.BestBeforeDay;
-import be.ww.shared.type.ingredient.IngredientId;
 import be.ww.shared.type.ingredient.Quantity;
 import be.ww.shared.type.ingredient.UseByDay;
 import be.ww.stock.api.command.AddAppliancesCommand;
@@ -133,24 +134,27 @@ public class LocationRestController {
 				.subscribeOn(Schedulers.parallel());
 	}
 
-	@PostMapping("{locationId}/products/{productId}/ingredients/{ingredientId}/provisions/{provisionId}")
+	@PostMapping("{locationId}/provisions")
 	public Mono<Object> consumeProvisions(
 			@PathVariable final String locationId,
-			@PathVariable final String productId,
-			@PathVariable final String provisionId,
-			@PathVariable final String ingredientId,
+
 			@RequestBody final LocationStoreProvisionRequestData request
 	) {
-		return reactorCommandGateway.send(new StoreProvisionsCommand(
-						LocationId.of(locationId),
-						ProductId.of(productId),
-						ProvisionId.of(provisionId),
-						IngredientId.of(ingredientId),
-						new Quantity(Amount.of(request.amount()), Quantity.Unit.valueOf(request.unit())),
-						new BestBeforeDay(request.bestBeforeDay()),
-						new UseByDay(request.useByDay())
+		List<StoreProvisionsCommand.Product> provisions = new ArrayList<>();
+		request.products().forEach(product ->
+				provisions.add(StoreProvisionsCommand.Product.builder()
+						.productId(ProductId.of(product.productId()))
+						.quantity(new Quantity(Amount.of(product.amount()), Quantity.Unit.valueOf(product.unit())))
+						.bestBeforeDay(new BestBeforeDay(product.bestBeforeDay()))
+						.useByDay(new UseByDay(product.useByDay()))
+						.build())
+		);
+		StoreProvisionsCommand command = StoreProvisionsCommand.builder()
+				.locationId(LocationId.of(locationId))
+				.provisions(provisions)
+				.build();
 
-				))
+		return reactorCommandGateway.send(command)
 				.subscribeOn(Schedulers.parallel());
 	}
 

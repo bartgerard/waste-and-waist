@@ -3,7 +3,6 @@ package be.ww.stock.query.projection;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toUnmodifiableSet;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 import org.axonframework.config.ProcessingGroup;
@@ -13,12 +12,10 @@ import org.axonframework.queryhandling.QueryUpdateEmitter;
 import org.springframework.stereotype.Component;
 
 import be.ww.shared.type.LocationId;
-import be.ww.shared.type.ingredient.Quantity;
 import be.ww.stock.api.event.AppliancesAddedEvent;
 import be.ww.stock.api.event.LocationAddedEvent;
 import be.ww.stock.api.event.LocationRemovedEvent;
 import be.ww.stock.api.event.ProvisionDisposeEvent;
-import be.ww.stock.api.event.ProvisionsConsumedEvent;
 import be.ww.stock.api.event.ProvisionsStoredEvent;
 import be.ww.stock.api.event.StorageFacilitiesAddedEvent;
 import be.ww.stock.api.query.FindLocationByIdQuery;
@@ -135,35 +132,13 @@ public class StockProjection {
                 .orElseThrow(() -> new IllegalArgumentException("no appliances found on this location"));
     }
 
-    @EventHandler
-    public void on(
-            final ProvisionsConsumedEvent event
-    ) throws IllegalAccessException {
-        LocationDocument product = locationRepository.findByProductId(event.productId().id())
-                .orElseThrow(() -> new IllegalAccessException("Can't reduce stock that is not present"));
-        Quantity leftOverQuantity = product.getQuantity().subtract(event.quantity());
-        if (leftOverQuantity.amount().value().equals(BigDecimal.ZERO)) {
-            locationRepository.delete(product);
-        } else {
-            locationRepository.save(LocationDocument.builder()
-                    .productId(event.productId().id())
-                    .provisionId(event.provisionId().id())
-                    .quantity(leftOverQuantity)
-                    .build()
-            );
-        }
-    }
 
     @EventHandler
     public void on(
             final ProvisionsStoredEvent event
     ) {
         locationRepository.save(LocationDocument.builder()
-                .productId(event.productId().id())
-                .ingredientId(event.ingredientId().id())
-                .quantity(event.quantity())
-                .bestBefore(event.bestBeforeDay().day())
-                .usedBy(event.useByDay().day())
+                .provisions(event.provisions())
                 .build()
         );
 
