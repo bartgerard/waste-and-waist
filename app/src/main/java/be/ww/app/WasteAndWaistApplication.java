@@ -3,6 +3,7 @@ package be.ww.app;
 import be.ww.configuration.AxonConfiguration;
 import be.ww.configuration.DateSourceConfiguration;
 import be.ww.configuration.ElasticSearchConfiguration;
+import be.ww.configuration.WebConfiguration;
 import be.ww.household.HouseholdModule;
 import be.ww.kitchen.KitchenModule;
 import be.ww.notification.NotificationModule;
@@ -20,6 +21,7 @@ import org.springframework.context.annotation.Import;
         JpaEventStoreAutoConfiguration.class
 })
 @Import({
+        WebConfiguration.class,
         ObjectMapperConfiguration.class,
         AxonConfiguration.class,
         DateSourceConfiguration.class,

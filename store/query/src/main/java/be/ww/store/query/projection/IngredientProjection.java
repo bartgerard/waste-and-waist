@@ -3,6 +3,7 @@ package be.ww.store.query.projection;
 import be.ww.shared.type.Amount;
 import be.ww.shared.type.ProductId;
 import be.ww.shared.type.ingredient.IngredientId;
+import be.ww.shared.type.ingredient.NutritionalFact;
 import be.ww.store.api.event.ProductAddedEvent;
 import be.ww.store.api.query.FindIngredientByIdQuery;
 import be.ww.store.api.query.Ingredient;
@@ -61,7 +62,7 @@ public class IngredientProjection {
                         .allergens(AllergenField.from(event.allergens()))
                         .build()
                 )
-                //.nutritionalFacts()
+                .nutritionalFactRanges(ingredientDocument.getNutritionalFactRanges())
                 .build();
 
         ingredientRepository.save(newDocument);
