@@ -14,7 +14,6 @@ import java.util.Set;
 @Document(indexName = "ww-store-query-ingredient")
 @Value
 @Builder(toBuilder = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class IngredientDocument {
     @Id
     String id;

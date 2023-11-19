@@ -1,4 +1,4 @@
-package be.ww.store.command.web;
+package be.ww.store.web;
 
 import be.ww.shared.type.Amount;
 import be.ww.shared.type.ingredient.Allergen;

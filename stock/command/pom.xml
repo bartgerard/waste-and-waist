@@ -30,11 +30,6 @@
             <artifactId>stock-api</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>be.ww</groupId>
-            <artifactId>stock-adapter</artifactId>
-        </dependency>
-
 	    <!-- 3rd party -->
 
 	    <!-- spring -->

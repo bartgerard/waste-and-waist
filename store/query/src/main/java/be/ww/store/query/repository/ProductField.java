@@ -1,8 +1,8 @@
 package be.ww.store.query.repository;
 
-import be.ww.shared.type.ingredient.Allergen;
 import be.ww.shared.type.ingredient.NutritionalFact;
 import lombok.Builder;
+import lombok.Singular;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
@@ -20,13 +20,14 @@ public record ProductField(
         @Field(name = "brand", type = FieldType.Keyword, norms = false)
         String brand,
         @Field(name = "stores", type = FieldType.Nested)
-        Set<String> stores,
-        @Field(name = "unit_quantity", type = FieldType.Object)
+        Set<StoreField> stores,
+        @Field(name = "unit_quantity", type = FieldType.Nested)
         QuantityField unitQuantity,
-        @Field(name = "nutritional_facts", type = FieldType.Nested)
+        @Singular
+        @Field(name = "nutritional_facts", type = FieldType.Flattened)
         Map<NutritionalFact, BigDecimal> nutritionalFacts,
         @Field(name = "allergens", type = FieldType.Nested)
-        Set<Allergen> allergens
+        Set<AllergenField> allergens
 ) {
     @Override
     public boolean equals(Object o) {

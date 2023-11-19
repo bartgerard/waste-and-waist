@@ -1,4 +1,4 @@
-package be.ww.store.query.web;
+package be.ww.store.web;
 
 import org.springframework.stereotype.Controller;
 

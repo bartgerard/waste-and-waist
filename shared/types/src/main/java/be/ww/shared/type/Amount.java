@@ -31,4 +31,10 @@ public record Amount(
                 value().subtract(subtrahend.value())
         );
     }
+
+    public boolean isEqualTo(
+            final Amount other
+    ) {
+        return value().compareTo(other.value()) == 0;
+    }
 }

@@ -2,18 +2,15 @@ package be.ww.store;
 
 import be.ww.store.command.StoreCommandConfiguration;
 import be.ww.store.query.StoreQueryConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+import be.ww.store.web.ProductRestController;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import({
+        ProductRestController.class,
         StoreCommandConfiguration.class,
         StoreQueryConfiguration.class
-})
-@ComponentScan({
-        "be.ww.store.command.web",
-        "be.ww.store.query.web"
 })
 public class StoreModule {
 }
