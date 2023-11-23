@@ -1,0 +1,44 @@
+<p-sidebar
+  [modal]="false"
+  [showCloseIcon]="false"
+  [visible]="true"
+  position="left">
+  <ul class="list-none flex-column gap-4 flex">
+    <li>
+      <a class="flex gap-4 no-underline text-color" routerLink="/households">
+        <i class="pi pi-home"></i>
+        <span>Households</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="flex gap-4 no-underline text-color" routerLink="/stock">
+        <i class="pi pi-file-word"></i>
+        <span>Stock</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="flex gap-4 no-underline text-color" routerLink="/plan">
+        <i class="pi pi-calendar"></i>
+        <span>Plan</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="flex gap-4 no-underline text-color" routerLink="/shop">
+        <i class="pi pi-shopping-cart"></i>
+        <span>Shop</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="flex gap-4 no-underline text-color" routerLink="/cook">
+        <i class="pi pi-wrench"></i>
+        <span>Cook</span>
+      </a>
+    </li>
+  </ul>
+</p-sidebar>
+
+<ng-content></ng-content>

@@ -3,7 +3,6 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: rgb(255, 248, 232);
 }
 
 .form-element {
@@ -17,4 +16,20 @@
 
 .label-spacing {
     margin-bottom: 10px;
+}
+
+.block-div {
+    display: inline-flex;
+}
+
+.margin-left-10 {
+    margin-left: 20px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.longer-cell {
+    width: 900px;
 }

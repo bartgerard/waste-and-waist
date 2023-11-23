@@ -1,32 +1,35 @@
 <div class="centered-form">
-  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div class="centered-form__image">
+    <img src="assets/logo.png" alt="Logo" />
+  </div>
+
+  <form [formGroup]="formGroup" (ngSubmit)="login()">
     <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
       <div class="ui-grid-row form-element">
-        <img src="assets/logo.png" alt="Logo" />
-      </div>
-      <div class="ui-grid-row form-element">
         <div class="ui-grid-col-2 label-spacing">Username</div>
-        <div class="ui-grid-col-6">
+
+        <span class="p-input-icon-left">
+          <i class="pi pi-user"></i>
           <input
-            pInputText
             type="text"
-            formControlName="username"
-            class="p-inputtext-lg"
             placeholder="Username"
-            name="username" />
-        </div>
+            pInputText
+            formControlName="username" />
+        </span>
       </div>
+
       <div class="ui-grid-row form-element">
         <div class="ui-grid-col-2 label-spacing">Password</div>
-        <div class="ui-grid-col-6">
+
+        <span class="p-input-icon-left">
+          <i class="pi pi-lock"></i>
           <input
-            pInputText
             type="password"
-            formControlName="password"
-            class="p-inputtext-lg"
             placeholder="Password"
-            name="password" />
-        </div>
+            pInputText
+            formControlName="password" />
+        </span>
+
         <div class="ui-grid-col-4">
           <div
             [hidden]="
@@ -38,15 +41,16 @@
           </div>
         </div>
       </div>
+
       <div class="ui-grid-row form-element">
-        <div class="ui-grid-col-2"></div>
+        <div class="ui-grid-col-64s7w s"></div>
+
         <div class="ui-grid-col-6 form-element">
           <p-button
-            label="Login"
             (onClick)="login()"
+            label="Login"
             class="center-button p-button-lg"></p-button>
         </div>
-        <div class="ui-grid-col-4"></div>
       </div>
     </div>
   </form>
