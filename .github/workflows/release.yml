@@ -10,9 +10,6 @@ on:
         description: 'A new version'
         required: true
         type: string
-  pull_request:
-    types:
-      - closed
 
 jobs:
   build:
